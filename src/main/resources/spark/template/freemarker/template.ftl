@@ -53,74 +53,7 @@
     <main>
         
         <div class="container main">
-            <h2 class="lancamentos" id="lancamentos">Lançamentos</h2>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
-                            class="active" aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                            aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                            aria-label="Slide 3"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3"
-                            aria-label="Slide 4"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4"
-                            aria-label="Slide 5"></button>
-                    </div>
-
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <div class="row" style="margin-bottom: 35px;">
-                                <div class="col-xs-12 col-12 col-md-6" style="min-height: 294px;">
-                                    <iframe width="522" height="380" src="https://www.youtube.com/embed/ieAUlb9spk8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>  
-                                </div>
-                                <div class="col-xs-12 col-12 col-md-6">
-                                    <p1 height="100% ">
-                                        <!-- musica 1 -->
-                                    </p1>
-                                    <p></p>
-                                    <div class="row ">
-                                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-4">
-                                            Thiago e Graciano - Terceiro Sofrendo Ft. Tierry | DVD Onda De Amor
-                                        </div>
-
-                                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-4">
-                                            Letra: Ela não gosta de se prender
-                                            Mas vai te prender
-                                            Quando você ver já era
-                                            Tô falando isso porque já passei sufoco na mão dela
-                                            
-                                            Ela me pegou e pegou você
-                                            Mas fez direitinho pra nenhum dos dois saber
-                                            Ela fez amor, amor sem sentimento
-                                            Enganou você, enganou eu ao mesmo tempo
-                                         </div>
-
-                                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-4">
-                                            Cantores:  Thiago e Graciano
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12"><br>
-                                        Estreia: 25 de Agosto de 2022
-                                    </div>
-
-                                    <div class="col-12">
-                                        Avaliação: Eu não esperava algo tão bom, chorei muito escutando.
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <!--musica 2-->
-
-                    </div>
-                </div>
-            </div>
+            <h2 class="lancamentos" id="lancamentos">Sesssao de items carrosel</h2>
         </div>
 
         <div class="container">
@@ -144,31 +77,6 @@
             </div>
         </div>
         <div class="container">
-            <div class="row">
-                <div class="col-3">
-                    <div class="card" widht="100%">
-                        <img src="images/adele.jpg" class="card-img-top" alt="musica1">
-                        <div class="card-body">
-                            <p class="card-text"><b></b></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="card" widht="100%">
-                        <img src="images/adele.jpg" class="card-img-top" alt="musica1">
-                        <div class="card-body">
-                            <p class="card-text"><b></b></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="card" widht="100%">
-                        <img src="images/adele.jpg" class="card-img-top" alt="musica1">
-                        <div class="card-body">
-                            <p class="card-text"><b></b></p>
-                        </div>
-                    </div>
-                </div>
 
             </div>
         </div>
@@ -185,7 +93,7 @@
             <h2 class="avaliacoes" id="avaliacoes">Últimas avaliações</h2>
         </div>
         <div class="container">
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-4">
                     <div class="container">
                         <div class="row">
@@ -202,39 +110,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-4">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="profile-header-container">
-                                    <img class="img-circle" src="images/casamento-kauan-capa.jpg" height="100%" width="100%" />
-                                </div>
-                            </div>
-                            <div class="col-9">
-                                <h6>Gabriel Luiz</h6>
-                                <p><b>Avaliação:</b> Esperava mais.</p>
-                                <p>★★★★★ - 12/01/2022</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="profile-header-container">
-                                    <img class="img-circle" src="images/casamento-kauan-capa.jpg" height="100%" width="100%" />
-                                </div>
-                            </div>
-                            <div class="col-9">
-                                <h6>Luiza Amaral</h6>
-                                <p><b>Avaliação:</b> Não existe nada melhor.</p>
-                                <p>★★★★☆ - 26/04/2022</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </div> -->
         </div>
         <div class="container" style="text-align: right; margin-top: 10px;">
             <div class="row">
@@ -247,7 +123,7 @@
         <div class="container">
             <h2 class="entrevistas" id="entrevistas">Musicas</h2>
         </div>
-        <div class="container">
+        <!-- <div class="container">
             <div class="row">
                 <div class="col-4">
                     <iframe width="322" height="180" src="https://www.youtube.com/embed/tQ0yjYUFKAE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -259,30 +135,7 @@
                     <iframe width="322" height="180" src="https://www.youtube.com/embed/NKzd_YiW9AQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
             </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-4">
-                    <p><b>Musica:</b>Peaches<br>
-                        <b>Diretor:</b>Justin Bieber.<br>
-                        <b>Estreia:</b> 2013
-                    </p>
-                </div>
-                <div class="col-4">
-                    <p><b>Musica:</b> Hung Up.<br>
-                        <b>Diretor:</b>Madonna.<br>
-                        <b>Estreia:</b> 2014
-                    </p>
-                    </p>
-                </div>
-                <div class="col-4">
-                    <p><b>Musica:</b>What If I Told You That I Love You.<br>
-                        <b>Diretor:</b>Ali Gatie.<br>
-                        <b>Estreia:</b> 2015
-                    </p>
-                </div>
-            </div>
-        </div>
+        </div> -->
         <div class="container" style="text-align: right; margin-top: 10px;">
             <div class="row">
                 <div class="col-12">
