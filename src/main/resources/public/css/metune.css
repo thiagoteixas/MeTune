@@ -1,0 +1,237 @@
+
+body {
+    background-color: lightgrey;
+    color: black;
+}
+
+body p {
+    font-size: 14pt;
+}
+
+header {
+    background-color: grey;
+    color: black;
+    padding: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+}
+
+.line {
+    display: inline-block;
+    border-top: 1px solid white;
+    width: 100%;
+}
+
+/* ------------------------------ Header        ------------------------------ */
+.logo {
+    max-width: 70px;
+    float: left;
+}
+
+.active {
+    color: white !important;
+}
+
+.nav-link {
+    background-color: grey;
+    color: black !important;
+    font-size: 14pt;
+}
+
+.nav-link:visited {
+    color: black;
+}
+
+.nav-link:hover {
+    color: white !important;
+}
+
+.nav-link:active {
+    background-color: white;
+    color: black;
+}
+
+.navbar-toggler {
+    color: lightgrey !important;
+}
+
+.sobre h1 {
+    padding-top: 30px;
+}
+
+.frase {
+    padding-top: 80px;
+    padding-bottom: 50px;
+}
+
+.convite {
+    text-align: center;
+    color: blue;
+}
+
+.fale_conosco {
+    background-color: lightgray;
+    color: black;
+    font-size: 18pt;
+    border: 10px;
+}
+
+.fale_conosco:hover {
+    color: blue;
+}
+
+
+.introducao {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.subtitulo {
+    padding-top: 5px;
+    padding-bottom: 20px;
+    font-size: 18pt;
+}
+
+.subtitulo2 {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    font-size: 18pt;
+}
+
+.produtos {
+    background-color: lightgrey;
+    color: black;
+    font-size: 12pt;
+    border: 0;
+    float: right;
+}
+
+.produtos:hover {
+    color: blue;
+}
+
+.mais {
+    background-color: lightgray;
+    color: black;
+    font-size: 12pt;
+    border: 0;
+    float: right;
+}
+
+.mais:hover {
+    color: blue;
+}
+
+.subtitulo_beneficios {
+    padding-top: 5px;
+    padding-bottom: 20px;
+    font-size: 18pt;
+    text-align: center;
+}
+
+.beneficios {
+    list-style: none;
+    text-align: center;
+}
+
+.lista {
+    padding-bottom: 12px;
+}
+
+.linguagem h1 {
+    padding-top: 30px;
+}
+
+.links h3 {
+    padding-top: 50px;
+}
+
+.exemplos {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.titulo {
+    padding-bottom: 50px;
+    text-align: center;
+}
+
+.tipos {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+.minititulo {
+    text-align: center;
+}
+
+.exemplos p {
+    text-align: center;
+}
+
+.tipos {
+    max-width: 100px;
+}
+
+.todos {
+    background-color: lightgrey;
+    color: black;
+    font-size: 12pt;
+    padding-top: 1cm;
+    border: 0;
+}
+
+.todos:hover {
+    color: blue;
+}
+
+.iframe {
+    display: block;
+    margin: 0 auto;
+}
+
+.redes_sociais {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.logo_footer {
+    max-width: 70px;
+}
+
+.img_social {
+    float: right;
+    max-width: 50px;
+    padding-right: 20px;
+}
+
+
+.footer {
+    background-color: black;
+    color: lightgrey;
+}
+
+.footer p {
+    text-align: center;
+    padding: 10px;
+}
+
+/* ------------------------------ Media Queries ------------------------------ */
+@media screen and (max-width: 767px) {
+    .subtitulo_beneficios {
+        text-align: left;
+        padding-top: 20px;
+    }
+
+    .beneficios {
+        text-align: left;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .menu_area {
+        border-right: 50px;
+    }
+}
