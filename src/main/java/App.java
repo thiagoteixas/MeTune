@@ -33,9 +33,12 @@ public class App {
         });
         
        get("/post", (req, res) -> {
+    	   	res.type("aplication/json");
     	   	Map<String, Object> map = new HashMap<>();
        		map.put("test", "METUNE");
+//       		System.out.println(map);
        		return new Gson().toJson(map); 
-       }, json());
+//       		return map;
+       });
 	}
 }
