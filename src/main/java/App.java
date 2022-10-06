@@ -3,8 +3,11 @@ import static spark.Spark.*;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.gson.Gson;
+
 import spark.ModelAndView;
 import spark.template.freemarker.FreeMarkerEngine;
+
 
 public class App {
 	
@@ -28,5 +31,11 @@ public class App {
         		new ModelAndView(map, "/test/login.ftl")
         	);
         });
+        
+       get("/post", (req, res) -> {
+    	   	Map<String, Object> map = new HashMap<>();
+       		map.put("test", "METUNE");
+       		return new Gson().toJson(map); 
+       }, json());
 	}
 }
