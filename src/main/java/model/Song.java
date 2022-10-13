@@ -13,6 +13,12 @@ public class Song {
       this.duration = duration;
       this.author = author;
   }
+	public Song(int id, String name, int duration) {
+		this.id = id;
+		this.name = name;
+		this.duration = duration;
+		this.author = -1;
+	}
 
 	public int getId() {
 		return id;
