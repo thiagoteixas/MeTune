@@ -7,10 +7,9 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import Logo from '../img/logo.jpg';
-import LogoMetune from '../img/metune.jpg'
+import Logo from './img/logo.jpg';
+import LogoMetune from './img/metune.jpg'
 
-import Image from 'react-bootstrap/Image'
 import Figure from 'react-bootstrap/Figure';
 
 import { BsFillPersonFill, BsSearch, BsFillHeartFill } from "react-icons/bs";
