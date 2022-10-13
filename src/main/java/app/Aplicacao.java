@@ -9,9 +9,6 @@ import java.util.Map;
 
 import com.google.gson.Gson;
 
-import spark.ModelAndView;
-import spark.template.freemarker.FreeMarkerEngine;
-
 public class Aplicacao {
   
     public static SongService SongService = new SongService();
