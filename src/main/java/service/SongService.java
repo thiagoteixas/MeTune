@@ -18,36 +18,40 @@ public class SongService {
     }
   }
   
-  public Song insert(Request req, Response res) {
-    int id = Integer.parseInt(req.queryParams("ID_musica"));
-    String autor_temp = req.queryParams("Autor");
-    String titulo = req.queryParams("Titulo");
-    int duracao = Integer.parseInt(req.queryParams("Duracao"));
-    int autor = -1;
+  public String insert(Request req, Response res) {
+//    int id = Integer.parseInt(req.queryParams("ID_musica"));
+    String titulo = req.queryParams("titulo");
+    int duracao = Integer.parseInt(req.queryParams("duracao"));
+    int autor = 1;
+    
+    System.out.println("test");
     
     String resp = "";
-    Song song = new Song(id, titulo, duracao, autor);
+    Song song = new Song(titulo, duracao, autor);
     
-    if (autor_temp != null) {
-      autor = Integer.parseInt(autor_temp);
+    if (req.queryParams("Autor") != null) {
+      autor = Integer.parseInt(req.queryParams("Autor"));
       song.setAuthor(autor);
+    }
       
     
     if (SongDAO.insert(song) == true) {
       resp = "Música (" + titulo + ") inserida";
+      System.out.println("Música (" + titulo + ") inserida");
       res.status(201);
     } else {
         resp = "Produto (" + titulo + ") não inserido!";
+        System.out.println("Produto (" + titulo + ") não inserido!");
         res.status(404); // 404 Not found
       }
 
-    }
-    return song;
+    return resp;
   }
   
   public Song get(Request req, Response res) {
     int id = Integer.parseInt(req.params(":id"));       
     Song song = (Song) SongDAO.get(id);
+    
     
     if (song != null) {
       res.status(200);
@@ -64,9 +68,9 @@ public class SongService {
     String resp = "";       
 
     if (song != null) {
-        song.setAuthor(Integer.parseInt(req.queryParams("ID_Musica")));
-        song.setName(req.queryParams("Titulo"));
-        song.setDuration(Integer.parseInt(req.queryParams("Duracao")));
+//        song.setAuthor(Integer.parseInt(req.queryParams("ID_Musica")));
+        song.setName(req.queryParams("titulo"));
+        song.setDuration(Integer.parseInt(req.queryParams("duracao")));
         SongDAO.update(song);
         res.status(200); // success
         resp = "Musica (ID " + song.getId() + ") atualizado!";

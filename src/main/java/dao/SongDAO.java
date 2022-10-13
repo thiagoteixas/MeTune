@@ -22,9 +22,10 @@ public class SongDAO extends DAO {
 		boolean status = false;
 		try {  
 			Statement st = conexao.createStatement();
-			String sql = "INSERT INTO song (name, duration) "
-				       + "VALUES ('"+ song.getName() + "', '"  
-				       + song.getDuration() + "');";
+			String sql = "INSERT INTO song (name, duration, author_id) "
+				       + "VALUES ('"+ song.getName() + "', "  
+				       + song.getDuration() + ", "
+				       + song.getAuthor() + ");";
 			//System.out.println(sql);
 			st.executeUpdate(sql);
 			st.close();

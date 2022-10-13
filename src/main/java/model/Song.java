@@ -20,6 +20,11 @@ public class Song {
 		this.author = -1;
 	}
 
+	public Song(String name, int duration, int author) {
+	      this.name = name;
+	      this.duration = duration;
+	      this.author = author;
+	}
 	public int getId() {
 		return id;
 	}

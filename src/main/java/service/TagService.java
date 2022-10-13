@@ -19,11 +19,11 @@ public class TagService {
   }
   
   public Tag insert(Request req, Response res) {
-    int id = Integer.parseInt(req.queryParams("ID_musica"));
-    String nome = req.queryParams("Nome");
+//    int id = Integer.parseInt(req.queryParams("ID_musica"));
+    String nome = req.queryParams("titulo");
     
     String resp = "";
-    Tag tag = new Tag(id, nome);
+    Tag tag = new Tag(nome);
     
     
     if (TagDAO.insert(tag) == true) {
@@ -56,8 +56,9 @@ public class TagService {
     String resp = "";       
 
     if (tag != null) {
-        tag.setName(req.queryParams("ID_Musica"));
+//        tag.setName(req.queryParams("ID_Musica"));
         
+    	tag.setName(req.queryParams("titulo"));
         TagDAO.update(tag);
         res.status(200); // success
         resp = "Tag (ID " + tag.getId() + ") atualizado!";

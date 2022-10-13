@@ -1,5 +1,8 @@
 package service;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+
 import dao.UserDAO;
 import model.User;
 
@@ -18,17 +21,31 @@ public class UserService {
     }
   }
   
+	public static String toMD5(String senha) {
+		String resp = "";
+		try {
+			MessageDigest m=MessageDigest.getInstance("MD5");
+			m.update(senha.getBytes(),0, senha.length());
+			resp = new BigInteger(1,m.digest()).toString(16);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return resp;
+	}
+  
   public User insert(Request req, Response res) {
-    int id = Integer.parseInt(req.queryParams("ID_usuario"));
-    String email = req.queryParams("Email");
-    String senha = req.queryParams("Senha");
-    String nome = req.queryParams("Nome");
-    boolean tipo_cadastro = Boolean.parseBoolean(req.queryParams("Tipo_Cadastro"));
+//    int id = Integer.parseInt(req.queryParams("ID_usuario"));
+    String email = req.queryParams("email");
+    String senha = req.queryParams("senha");
+    String nome = req.queryParams("nome");
+    boolean tipo_cadastro = Boolean.parseBoolean(req.queryParams("cadastro"));
     
     String resp = "";
-    User user = new User(id, email, nome, tipo_cadastro);
+     
+    User user = new User(email, toMD5(senha), nome, tipo_cadastro);
       
-    
+   
     if (UserDAO.insert(user) == true) {
       resp = "Usuário (" + nome + ") inserido";
       res.status(201);
@@ -60,9 +77,10 @@ public class UserService {
     String resp = "";       
 
     if (user != null) {
-        user.setId(Integer.parseInt(req.queryParams("ID_Usuario")));
-        user.setUsername(req.queryParams("Nome"));
-        user.setPremium(Boolean.parseBoolean(req.queryParams("Tipo_Cadastro")));
+//        user.setId(Integer.parseInt(req.queryParams("ID_Usuario")));
+        user.setUsername(req.queryParams("nome"));
+        user.setUsername(req.queryParams("email"));
+        user.setPremium(Boolean.parseBoolean(req.queryParams("cadastro")));
         UserDAO.update(user);
         res.status(200); // success
         resp = "Usuário (ID " + user.getId() + ") atualizado!";

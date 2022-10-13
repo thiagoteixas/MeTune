@@ -3,6 +3,7 @@ import static spark.Spark.*;
 
 import service.*;
 import model.*;
+import Utils.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +15,7 @@ public class Aplicacao {
     public static SongService SongService = new SongService();
     public static TagService TagService = new TagService();
     public static UserService UserService = new UserService();
+    public static Test testRoutes = new Test();
     
 	
 	public static void main(String[] args) {
@@ -48,5 +50,8 @@ public class Aplicacao {
       get("/user/delete/:id", (request, response) -> UserService.delete(request, response));
       
       
+      // Test routes
+      post("/test", (request, response) -> testRoutes.insert(request, response));	
+      get("/test2", (request, response) -> testRoutes.get(request, response));
 	} 
 }

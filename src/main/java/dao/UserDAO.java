@@ -22,9 +22,10 @@ public class UserDAO extends DAO {
 		boolean status = false;
 		try {  
 			Statement st = conexao.createStatement();
-			String sql = "INSERT INTO user (email, username, premium) "
-				       + "VALUES ('"+ user.getEmail() + "', '" 
+			String sql = "INSERT INTO public.user (email, username, password, premium) "
+				       + "VALUES ('"+ user.getEmail() + "', '"
 				       + user.getUsername() + "', '" 
+				       + user.getPassword() + "', '"
 				       + user.isPremium() + "');";
 			//System.out.println(sql);
 			st.executeUpdate(sql);
@@ -42,7 +43,7 @@ public class UserDAO extends DAO {
 		
 		try {
 			Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-			String sql = "SELECT * FROM user WHERE id = " + id;
+			String sql = "SELECT * FROM public.user WHERE id = " + id;
 			//System.out.println(sql);
 			ResultSet rs = st.executeQuery(sql);	
 	        if(rs.next()){            
@@ -110,7 +111,7 @@ public class UserDAO extends DAO {
 		boolean status = false;
 		try {  
 			Statement st = conexao.createStatement();
-			String sql = "UPDATE user SET email = '" + user.getEmail() 
+			String sql = "UPDATE public.user SET email = '" + user.getEmail() 
 						+ "', username = '" + user.getUsername()
 						+ "', premium = '" + user.isPremium()
 						+ "' WHERE id = " + user.getId();
@@ -128,7 +129,7 @@ public class UserDAO extends DAO {
 		boolean status = false;
 		try {  
 			Statement st = conexao.createStatement();
-			String sql = "DELETE FROM user WHERE id = " + id;
+			String sql = "DELETE FROM public.user WHERE id = " + id;
 			//System.out.println(sql);
 			st.executeUpdate(sql);
 			st.close();

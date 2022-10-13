@@ -9,6 +9,10 @@ public class Tag {
 		this.id = id;
 		this.name = name;
 	}
+	
+	public Tag(String name) {
+		this.name = name;
+	}
 
 	public int getId() {
 		return id;
