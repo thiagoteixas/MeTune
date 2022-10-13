@@ -1,3 +1,5 @@
 /target/
 .classpath
 env_file.txt
+.project
+.settings
