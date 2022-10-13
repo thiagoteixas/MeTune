@@ -43,5 +43,13 @@ public class Aplicacao {
       put("/tag/update/:id", (request, response) -> TagService.update(request, response));
       get("/tag/delete/:id", (request, response) -> TagService.delete(request, response));
       
+      // User routes
+      
+      post("/user", (request, response) -> UserService.insert(request, response));
+      get("/user/:id", (request, response) -> UserService.get(request, response));
+      put("/user/update/:id", (request, response) -> UserService.update(request, response));
+      get("/user/delete/:id", (request, response) -> UserService.delete(request, response));
+      
+      
 	} 
 }
