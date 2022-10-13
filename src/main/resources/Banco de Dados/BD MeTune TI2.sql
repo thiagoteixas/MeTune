@@ -58,6 +58,8 @@ CREATE TABLE IF NOT EXISTS `Musica` (
   `ID_Musica` INT NOT NULL AUTO_INCREMENT,
   `Autor` INT NOT NULL,
   `Titulo` VARCHAR(45) NOT NULL,
+  `Duracao` INT NOT NULL,
+  
   PRIMARY KEY (`ID_Musica`, `Autor`),
   CONSTRAINT `fk_Musica_Usuario1`
     FOREIGN KEY (`Autor`)

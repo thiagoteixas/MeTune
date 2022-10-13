@@ -5,12 +5,14 @@ public class Song {
 	private int id;
 	private String name;
 	private int duration;
+	private int author;
 	
-	public Song(int id, String name, int duration) {
-		this.id = id;
-		this.name = name;
-		this.duration = duration;
-	}
+	public Song(int id, String name, int duration, int author) {
+      this.id = id;
+      this.name = name;
+      this.duration = duration;
+      this.author = author;
+  }
 
 	public int getId() {
 		return id;
@@ -35,6 +37,14 @@ public class Song {
 	public void setDuration(int duration) {
 		this.duration = duration;
 	}
+	
+	public int getAuthor() {
+        return author;
+    }
+  
+    public void setAuthor(int author) {
+        this.author = author;
+    }
 
 	@Override
 	public String toString() {
