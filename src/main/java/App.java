@@ -5,10 +5,6 @@ import java.util.Map;
 
 import com.google.gson.Gson;
 
-import spark.ModelAndView;
-import spark.template.freemarker.FreeMarkerEngine;
-
-
 public class App {
 	
 	public static void main(String[] args) {

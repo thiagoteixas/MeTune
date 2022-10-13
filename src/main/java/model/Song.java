@@ -2,21 +2,21 @@ package model;
 
 public class Song {
 
-	private String id;
+	private int id;
 	private String name;
 	private int duration;
 	
-	public Song(String id, String name, int duration) {
+	public Song(int id, String name, int duration) {
 		this.id = id;
 		this.name = name;
 		this.duration = duration;
 	}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
