@@ -2,6 +2,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
 import 'bootstrap/dist/css/bootstrap.css';
+import Axios from 'axios';
 
 import { useState, useEffect, useRef } from 'react';
 
@@ -10,28 +11,50 @@ import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 import { TableContainer } from './styles/Styles.js';
 
+
 function ListaGeneros () {
     
     const nomeRef = useRef(null);
+    const [count, setCount] = useState([])
     
 
     // Lista de Gêneros para exemplo, criar nova lista com requisição da api    
-    let Generos = [
-        {
-            id: 1,
-            nome: "Rock",
-        },
-        {
-            id: 1,
-            nome: "Jazz",           
+    let Generos = []
+
+    useEffect (() => {
+        const a = async () => {
+            // return (atualizaTabela(count))
+            const b = await load();
         }
-    ]
+    }, [])
+
+    async function load (params) {
+        Axios.get('http://localhost:4567/tag/2')
+            .then(resp => {
+
+                Generos.push(resp.data);
+                console.log(Generos)
+
+                // setCount(atualizaTabela(Generos));
+                // atualizaTabela()
+
+                setCount( () => {
+                    return [...count, resp.data]
+                })
+            }) 
+    }
+
+
+
+    console.log(Generos, "fora de generos");
     
-    const [count, setCount] = useState(atualizaTabela(Generos));
+    // const [count, setCount] = useState(atualizaTabela(Generos));
+
+
 
 
     function atualizaTabela (users) {
-        console.log('atualiza tabela');
+        console.log('atualiza tabela', users[0]);
         return (            
             <Table striped bordered hover>
                 <thead>
@@ -118,7 +141,7 @@ function ListaGeneros () {
 
         <TableContainer>
         <h1>CRUD GÊNEROS</h1><br></br>
-        
+        {/* {load()} */}
         <Form.Group className="mb-3">
             <Form.Label>Pesquisar Gênero por nomes:</Form.Label>
             <Form.Control type="text" id="pesquisa-Genero" placeholder="Ex: joao.18music..." />

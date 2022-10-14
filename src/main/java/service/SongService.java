@@ -1,8 +1,14 @@
 package service;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import com.google.gson.Gson;
+
 import dao.SongDAO;
 import model.Song;
-
+import model.User;
+import service.UserService;
 import spark.Request;
 import spark.Response;
 
@@ -48,18 +54,33 @@ public class SongService {
     return resp;
   }
   
-  public Song get(Request req, Response res) {
+  public String get(Request req, Response res) {
     int id = Integer.parseInt(req.params(":id"));       
     Song song = (Song) SongDAO.get(id);
     
     
     if (song != null) {
-      res.status(200);
+    	
+	    Map<String, Object> preJson = new HashMap<>();
+	    preJson.put("id", id);
+	    preJson.put("nome", song.getName());
+	    
+//	    if (UserService.get(song.getAuthor())) {
+//	    	
+//	    }
+	    
+	    String autorNome = "";
+	    
+//	    preJson,put("autor", )
+	    
+	    res.status(200);
+	    
+	    return new Gson().toJson(preJson);
     } else {
       res.status(404);
     }
     
-    return song;
+    return song.toString();
   }
   
   public Song update(Request req, Response res) {

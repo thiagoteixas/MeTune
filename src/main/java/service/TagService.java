@@ -1,5 +1,10 @@
 package service;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import com.google.gson.Gson;
+
 import dao.TagDAO;
 import model.Tag;
 
@@ -37,17 +42,24 @@ public class TagService {
   }
     
   
-  public Tag get(Request req, Response res) {
+  public String get(Request req, Response res) {
     int id = Integer.parseInt(req.params(":id"));       
     Tag tag = (Tag) TagDAO.get(id);
-    
+
     if (tag != null) {
-      res.status(200);
+    	
+	    Map<String, Object> preJson = new HashMap<>();
+	    preJson.put("id", id);
+	    preJson.put("nome", tag.getName());
+	    res.type("aplication/json");
+	    res.status(200);
+	    
+	    return new Gson().toJson(preJson);
     } else {
       res.status(404);
     }
     
-    return tag;
+    return tag.toString();
   }
   
   public Tag update(Request req, Response res) {
