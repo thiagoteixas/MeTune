@@ -2,6 +2,10 @@ package service;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.google.gson.Gson;
 
 import dao.UserDAO;
 import model.User;
@@ -58,17 +62,25 @@ public class UserService {
     return user;
   }
   
-  public User get(Request req, Response res) {
+  public String get(Request req, Response res) {
     int id = Integer.parseInt(req.params(":id"));       
     User user = (User) UserDAO.get(id);
     
     if (user != null) {
-      res.status(200);
+      
+	    Map<String, Object> preJson = new HashMap<>();
+	    preJson.put("id", id);
+	    preJson.put("username", user.getUsername());
+	    preJson.put("email", user.getEmail());
+	    res.type("aplication/json");
+	    res.status(200);
+	    
+	    return new Gson().toJson(preJson);
     } else {
       res.status(404);
     }
     
-    return user;
+    return new Gson().toJson("{}");
   }
   
   public User update(Request req, Response res) {

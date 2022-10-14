@@ -24,7 +24,7 @@ class ListaGeneros extends React.Component {
 
     componentDidMount() {        
         
-        fetch('http://localhost:5432/tag/')
+        fetch('localhost:4567/tag')
           .then((result) => result.json())
           .then((dados) => {
             this.setState({ generos: dados });
@@ -46,7 +46,7 @@ class ListaGeneros extends React.Component {
             descricao : nome.value
         }
 
-        Axios.post('http://localhost:5432/tag/', qs.stringify(params)).then(
+        Axios.post('localhost:4567/tag/', qs.stringify(params)).then(
           (resp) => {
             this.setState(resp.data);
 
@@ -66,7 +66,7 @@ class ListaGeneros extends React.Component {
             nome : nome.value
         }
 
-        Axios.post('http://localhost/modelo/projeto/get', qs.stringify((params)))
+        Axios.post('localhost:4567/tag/2', qs.stringify((params)))
         .then(resp => {
 
             this.setState(resp.data);
@@ -92,7 +92,7 @@ class ListaGeneros extends React.Component {
         };
 
 
-        Axios.post(`/tag/update/:${id}`, qs.stringify(params)).then((resp) => {
+        Axios.post(`localhost:4567/tag/update/${id}`, qs.stringify(params)).then((resp) => {
           var result = resp.data;
 
           result.length === 0
@@ -113,7 +113,7 @@ class ListaGeneros extends React.Component {
         };
 
 
-        Axios.post(`http://localhost:5432/tag/delete/:${id}`, qs.stringify((params)))
+        Axios.post(`http://localhost:4567/tag/delete/${id}`, qs.stringify((params)))
         .then(resp => {
 
             var result = resp.data;
@@ -160,7 +160,7 @@ class ListaGeneros extends React.Component {
             
             <Form.Group className="mb-3">
                 <Form.Label>Pesquisar Gênero por nomes:</Form.Label>
-                <Form.Control type="text" id="pesquisa-Genero" placeholder="Ex: joao.18music..." id="pesquisa-genero"/>
+                <Form.Control type="text" placeholder="Ex: joao.18music..." id="pesquisa-genero"/>
                 <Form.Text className="text-muted">
                 </Form.Text>
             </Form.Group>

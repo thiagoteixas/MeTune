@@ -80,7 +80,7 @@ public class SongService {
       res.status(404);
     }
     
-    return song.toString();
+    return new Gson().toJson("{}");
   }
   
   public Song getByName(Request req, Response res) {

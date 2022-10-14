@@ -3,4 +3,4 @@
 env_file.txt
 ./metune/node_modules
 .project
-.settings
+.settingsnode_modules

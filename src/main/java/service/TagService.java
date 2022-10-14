@@ -59,7 +59,7 @@ public class TagService {
       res.status(404);
     }
     
-    return tag.toString();
+    return new Gson().toJson("{}");
   }
   
   public String getAll(Request req, Response res) {
