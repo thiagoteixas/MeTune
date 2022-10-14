@@ -62,6 +62,26 @@ public class TagService {
     return tag.toString();
   }
   
+  public String getAll(Request req, Response res) {
+	    int id = Integer.parseInt(req.params(":id"));       
+	    Tag tag = (Tag) TagDAO.get("");
+
+	    if (tag != null) {
+	    	
+		    Map<String, Object> preJson = new HashMap<>();
+		    preJson.put("id", id);
+		    preJson.put("nome", tag.getName());
+		    res.type("aplication/json");
+		    res.status(200);
+		    
+		    return new Gson().toJson(preJson);
+	    } else {
+	      res.status(404);
+	    }
+	    
+	    return tag.toString();
+	  }
+  
   public Tag update(Request req, Response res) {
     int id = Integer.parseInt(req.params(":id"));
     Tag tag = TagDAO.get(id);

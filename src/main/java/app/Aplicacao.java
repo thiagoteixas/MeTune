@@ -39,6 +39,7 @@ public class Aplicacao {
 	  
 	  post("/tag", (request, response) -> TagService.insert(request, response));
       get("/tag/:id", (request, response) -> TagService.get(request, response));
+      get("/tag", (request, response) -> TagService.getAll(request, response));
       put("/tag/update/:id", (request, response) -> TagService.update(request, response));
       get("/tag/delete/:id", (request, response) -> TagService.delete(request, response));
       

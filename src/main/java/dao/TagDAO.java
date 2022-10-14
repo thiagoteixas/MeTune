@@ -69,7 +69,7 @@ public class TagDAO extends DAO {
 	
 
 	
-	private List<Tag> get(String orderBy) {
+	public List<Tag> get(String orderBy) {
 	
 		List<Tag> tags = new ArrayList<Tag>();
 		

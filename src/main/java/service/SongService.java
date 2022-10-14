@@ -83,6 +83,23 @@ public class SongService {
     return song.toString();
   }
   
+  public Song getByName(Request req, Response res) {
+	 String name = req.queryParams("titulo");
+	 Song song = SongDAO.getByName(name);
+	 
+	 if (song != null) {
+	    	
+		    
+		    res.status(200);
+		    
+		    return song;
+	    } else {
+	      res.status(404);
+	    }
+	    
+	    return null;
+  }
+  
   public Song update(Request req, Response res) {
     int id = Integer.parseInt(req.params(":id"));
     Song song = SongDAO.get(id);

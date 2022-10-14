@@ -94,6 +94,23 @@ public class SongDAO extends DAO {
 		return songs;
 	}
 	
+	public Song getByName(String name) {
+		Song song = null;
+		try {
+			Statement st = conexao.createStatement();
+			String sql = "SELECT song WHERE name = '" + name;
+			System.out.println(sql);
+			ResultSet rs = st.executeQuery(sql);	
+			if(rs.next()){            
+	        	song = new Song(rs.getInt("id"), rs.getString("name"), rs.getInt("duration"));
+	        }
+	        st.close();
+		} catch (SQLException u) {  
+			throw new RuntimeException(u);
+		}
+		return song;
+	}
+	
 	public boolean update(Song song) {
 		boolean status = false;
 		try {  
