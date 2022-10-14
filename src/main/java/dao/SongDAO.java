@@ -8,16 +8,27 @@ import model.Song;
 
 public class SongDAO extends DAO {
 	
+	/*
+	 * Construtor padrao da classe, conecta automaticamente ao banco de dados quando criado
+	 */
 	public SongDAO() {
 		super();
 		conectar();
 	}
 
+	/**
+	 * Fecha a conexao entreo o banco de dados
+	 */
 	public void finalize() {
 		close();
 	}
 	
-	
+	/**
+	 * 
+	 * inserir musica dado um classe musica 
+	 * @param song classe a ser inserida no banco
+	 * @return Valida a insercao da classe
+	 */
 	public boolean insert(Song song) {
 		boolean status = false;
 		try {  
@@ -37,6 +48,11 @@ public class SongDAO extends DAO {
 	}
 
 	
+	/**
+	 * Retorna uma musica de acordo com o id passado no parametro
+	 * @param id numero de id para ser resgastado a classe
+	 * @return a classe resgatada
+	 */
 	public Song get(int id) {
 		Song song = null;
 		
@@ -54,7 +70,6 @@ public class SongDAO extends DAO {
 		}
 		return song;
 	}
-	
 	
 	public List<Song> get() {
 		return get("");
@@ -74,6 +89,11 @@ public class SongDAO extends DAO {
 	}
 
 	
+	/**
+	 * Dado um valor de ordem pegar todos os registros de acordo com a filtragem
+	 * @param orderBy valor a ser ordernado
+	 * @return uma lista dinamica com todos os registros ordenados
+	 */
 	private List<Song> get(String orderBy) {
 	
 		List<Song> songs = new ArrayList<Song>();
@@ -94,6 +114,11 @@ public class SongDAO extends DAO {
 		return songs;
 	}
 	
+	/**
+	 * Atualiza uma classe seguindo um novo objeto sendo passado por paremetro
+	 * @param song class a ser autalizada
+	 * @return valida se a classe foi autalizado com sucesso.
+	 */
 	public boolean update(Song song) {
 		boolean status = false;
 		try {  
@@ -111,6 +136,11 @@ public class SongDAO extends DAO {
 		return status;
 	}
 	
+	/**
+	 * Deleta um registro de acordo com um id
+	 * @param id id a ser passado para deletacao
+	 * @return valor validando se ele foi deletado
+	 */
 	public boolean delete(int id) {
 		boolean status = false;
 		try {  

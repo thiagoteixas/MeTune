@@ -9,6 +9,10 @@ public class DAO {
 		conexao = null;
 	}
 	
+	/**
+	 * Metodo para conectar ao banco de dados postgres a partir de uma username e senha
+	 * @return Valor validando a conexao entre o banco de dados
+	 */
 	public boolean conectar() {
 		String driverName = "org.postgresql.Driver";                    
 		String serverName = "localhost";
@@ -33,6 +37,10 @@ public class DAO {
 		return status;
 	}
 	
+	/**
+	 * Metodo para fechar a conexao entre o banco de dados
+	 * @return Valida o resultado do banco
+	 */
 	public boolean close() {
 		boolean status = false;
 		

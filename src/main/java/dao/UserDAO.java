@@ -8,16 +8,27 @@ import model.User;
 
 public class UserDAO extends DAO {
 	
+	/*
+	 * Construtor padrao da classe, conecta automaticamente ao banco de dados quando criado
+	 */
 	public UserDAO() {
 		super();
 		conectar();
 	}
 
+	/**
+	 * Fecha a conexao entreo o banco de dados
+	 */
 	public void finalize() {
 		close();
 	}
 	
-	
+	/**
+	 * 
+	 * inserir user dado um classe user 
+	 * @param user user a ser inserida no banco
+	 * @return Valida a insercao da classe
+	 */
 	public boolean insert(User user) {
 		boolean status = false;
 		try {  
@@ -37,7 +48,12 @@ public class UserDAO extends DAO {
 		return status;
 	}
 
-	
+
+	/**
+	 * Retorna uma user de acordo com o id passado no parametro
+	 * @param id numero de id para ser resgastado a classe
+	 * @return a classe resgatada
+	 */
 	public User get(int id) {
 		User user = null;
 		
@@ -82,7 +98,11 @@ public class UserDAO extends DAO {
 		return get("isPremium");		
 	}
 
-	
+	/**
+	 * Dado um valor de ordem pegar todos os registros de acordo com a filtragem
+	 * @param orderBy valor a ser ordernado
+	 * @return uma lista dinamica com todos os registros ordenados
+	 */
 	private List<User> get(String orderBy) {
 	
 		List<User> users = new ArrayList<User>();
@@ -107,6 +127,11 @@ public class UserDAO extends DAO {
 		return users;
 	}
 	
+	/**
+	 * Atualiza uma classe seguindo um novo objeto sendo passado por paremetro
+	 * @param song class a ser autalizada
+	 * @return valida se a classe foi autalizado com sucesso.
+	 */
 	public boolean update(User user) {
 		boolean status = false;
 		try {  
@@ -125,6 +150,11 @@ public class UserDAO extends DAO {
 		return status;
 	}
 	
+	/**
+	 * Deleta um registro de acordo com um id
+	 * @param id id a ser passado para deletacao
+	 * @return valor validando se ele foi deletado
+	 */
 	public boolean delete(int id) {
 		boolean status = false;
 		try {  

@@ -8,16 +8,27 @@ import model.Tag;
 
 public class TagDAO extends DAO {
 	
+	/*
+	 * Construtor padrao da classe, conecta automaticamente ao banco de dados quando criado
+	 */
 	public TagDAO() {
 		super();
 		conectar();
 	}
 
+	/**
+	 * Fecha a conexao entreo o banco de dados
+	 */
 	public void finalize() {
 		close();
 	}
 	
-	
+	/**
+	 * 
+	 * inserir tag dado um classe tag 
+	 * @param tag classe a ser inserida no banco
+	 * @return Valida a insercao da classe
+	 */
 	public boolean insert(Tag tag) {
 		boolean status = false;
 		try {  
@@ -34,7 +45,11 @@ public class TagDAO extends DAO {
 		return status;
 	}
 
-	
+	/**
+	 * Retorna uma tag de acordo com o id passado no parametro
+	 * @param id numero de id para ser resgastado a classe
+	 * @return boolean se a classe foi resgatada
+	 */
 	public Tag get(int id) {
 		Tag tag = null;
 		
@@ -68,7 +83,12 @@ public class TagDAO extends DAO {
 	}
 	
 
-	
+
+	/**
+	 * Dado um valor de ordem pegar todos os registros de acordo com a filtragem
+	 * @param orderBy valor a ser ordernado
+	 * @return uma lista dinamica com todos os registros ordenados
+	 */
 	private List<Tag> get(String orderBy) {
 	
 		List<Tag> tags = new ArrayList<Tag>();
@@ -89,6 +109,11 @@ public class TagDAO extends DAO {
 		return tags;
 	}
 	
+	/**
+	 * Atualiza uma classe seguindo um novo objeto sendo passado por paremetro
+	 * @param song class a ser autalizada
+	 * @return valida se a classe foi autalizado com sucesso.
+	 */
 	public boolean update(Tag tag) {
 		boolean status = false;
 		try {  
@@ -105,6 +130,11 @@ public class TagDAO extends DAO {
 		return status;
 	}
 	
+	/**
+	 * Deleta um registro de acordo com um id
+	 * @param id id a ser passado para deletacao
+	 * @return valor validando se ele foi deletado
+	 */
 	public boolean delete(int id) {
 		boolean status = false;
 		try {  
