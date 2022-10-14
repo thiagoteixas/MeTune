@@ -160,7 +160,7 @@ class ListaGeneros extends React.Component {
             
             <Form.Group className="mb-3">
                 <Form.Label>Pesquisar Gênero por nomes:</Form.Label>
-                <Form.Control type="text" id="pesquisa-Genero" placeholder="Ex: joao.18music..." id="pesquisa-genero"/>
+                <Form.Control type="text" id="pesquisa-Genero" placeholder="Ex: joao.18music..."/>
                 <Form.Text className="text-muted">
                 </Form.Text>
             </Form.Group>

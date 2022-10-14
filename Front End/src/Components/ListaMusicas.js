@@ -88,11 +88,16 @@ class Listamusicas extends React.Component {
         console.log('teste');
 
         var nome = document.getElementById('nomemusica-'+id);
+        var autor = document.getElementById('autormusica-'+id);
+        var duracao = document.getElementById('duracaomusica-'+id);
 
         const params = {
-            id: id,
-            descricao: nome.value
-        };
+            id : id,
+            nome : nome.value,
+            autor : autor.value,
+            duracao : duracao.value
+        }
+
 
 
         Axios.post('http://localhost/modelo/projeto/update', qs.stringify((params)))
@@ -100,7 +105,7 @@ class Listamusicas extends React.Component {
 
             var result = resp.data;
 
-            (result.length === 0) ? alert('Não foi possivel editar a Registro!') : alert('Registro editada com sucesso!', result);
+            (result.length === 0) ? alert('Não foi possivel editar o Registro!') : alert('Registro editado com sucesso!', result);
 
         });
 
@@ -122,7 +127,7 @@ class Listamusicas extends React.Component {
 
             var result = resp.data;
 
-            (result.length === 0) ? alert('Não foi possivel deletar a Registro!') : alert('Registro deletar com sucesso!', result);
+            (result.length === 0) ? alert('Não foi possivel deletar a Registro!') : alert('Registro deletado com sucesso!', result);
 
         });
 
@@ -146,7 +151,7 @@ class Listamusicas extends React.Component {
                         {this.state.musicas.map((musica) => 
                             <tr>                        
                                 <td>{musica.id}</td>
-                                <td><Form.Group className="mb-3"><Form.Control type="text" id={'nomemusica-'+musica.id} defaultValue={musica.descricao} key={musica.nome}/><Form.Text className="text"></Form.Text></Form.Group></td>
+                                <td><Form.Group className="mb-3"><Form.Control type="text" id={'nomemusica-'+musica.id} defaultValue={musica.nome} key={musica.nome}/><Form.Text className="text"></Form.Text></Form.Group></td>
                                 <td><Form.Group className="mb-3"><Form.Control type="text" id={'autormusica-'+musica.id} defaultValue={musica.autor} key={musica.autor}/><Form.Text className="text"></Form.Text></Form.Group></td>
                                 <td><Form.Group className="mb-3"><Form.Control type="text" id={'duracaomusica-'+musica.id} defaultValue={musica.duracao} key={musica.duracao}/><Form.Text className="text"></Form.Text></Form.Group></td>
                                 <td><Button variant="success" onClick={() => this.editarmusica(musica.id)}>Editar</Button></td>
@@ -168,7 +173,7 @@ class Listamusicas extends React.Component {
             
             <Form.Group className="mb-3">
                 <Form.Label>Pesquisar Músicas por nome:</Form.Label>
-                <Form.Control type="text" id="pesquisa-musica" placeholder="Ex: joao.18music..." id="pesquisa-musica"/>
+                <Form.Control type="text" id="pesquisa-musica" placeholder="Ex: joao.18music..."/>
                 <Form.Text className="text-muted">
                 </Form.Text>
             </Form.Group>
