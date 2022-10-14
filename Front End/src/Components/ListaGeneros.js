@@ -2,60 +2,131 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
 import 'bootstrap/dist/css/bootstrap.css';
+import React from 'react';
+
 import Axios from 'axios';
+import qs from 'qs';
 
-import { useState, useEffect, useRef } from 'react';
-
-import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 import { TableContainer } from './styles/Styles.js';
 
+class ListaGeneros extends React.Component {
 
-function ListaGeneros () {
-    
-    const nomeRef = useRef(null);
-    const [count, setCount] = useState([])
-    
+    constructor(props) {
+        super(props);
 
-    // Lista de Gêneros para exemplo, criar nova lista com requisição da api    
-    let Generos = []
-
-    useEffect (() => {
-        const a = async () => {
-            // return (atualizaTabela(count))
-            const b = await load();
+        this.state = {
+            generos : [],
         }
-    }, [])
 
-    async function load (params) {
-        Axios.get('http://localhost:4567/tag/2')
-            .then(resp => {
-
-                Generos.push(resp.data);
-                console.log(Generos)
-
-                // setCount(atualizaTabela(Generos));
-                // atualizaTabela()
-
-                setCount( () => {
-                    return [...count, resp.data]
-                })
-            }) 
     }
 
+    componentDidMount() {        
+        
+        fetch('http://localhost:5432/tag/')
+          .then((result) => result.json())
+          .then((dados) => {
+            this.setState({ generos: dados });
+          });
+        
+    }
+
+    componentDidUpdate () {
+
+        console.log('update');
+
+    }
+
+    criarGenero () {
+
+        var nome = document.getElementById('criar-genero');
+
+        const params = {
+            descricao : nome.value
+        }
+
+        Axios.post('http://localhost:5432/tag/', qs.stringify(params)).then(
+          (resp) => {
+            this.setState(resp.data);
+
+            resp.data.length === 0
+              ? alert('Não foi possivel criar o Registro!')
+              : alert('Registro criado com sucesso!', resp.data);
+          }
+        );
+
+    }
+
+    pesquisarGenero () {
+        
+        var nome = document.getElementById('pesquisa-genero');
+
+        const params = {
+            nome : nome.value
+        }
+
+        Axios.post('http://localhost/modelo/projeto/get', qs.stringify((params)))
+        .then(resp => {
+
+            this.setState(resp.data);
+
+            (resp.data.length === 0) ? alert('Não foi possivel encontrar o Registro!') : alert('Registro encontrado!', resp.data);
+
+        });
 
 
-    console.log(Generos, "fora de generos");
+    }
+
+    editarGenero (id) {
+
+        if (!window.confirm('Deseja editar esse registro??')) return;
     
-    // const [count, setCount] = useState(atualizaTabela(Generos));
+        console.log('teste');
+
+        var nome = document.getElementById('nomeGenero-'+id);
+
+        const params = {
+            id: id,
+            descricao: nome.value
+        };
 
 
+        Axios.post(`/tag/update/:${id}`, qs.stringify(params)).then((resp) => {
+          var result = resp.data;
+
+          result.length === 0
+            ? alert('Não foi possivel editar a Registro!')
+            : alert('Registro editada com sucesso!', result);
+        });
+
+    }
+
+    deletarGenero (id) {
+
+        console.log('id deleta',id);
+
+        if (!window.confirm('Deseja deletar esse registro??')) return;
+
+        const params = {
+            id: id.toString(),
+        };
 
 
-    function atualizaTabela (users) {
-        console.log('atualiza tabela', users[0]);
-        return (            
+        Axios.post(`http://localhost:5432/tag/delete/:${id}`, qs.stringify((params)))
+        .then(resp => {
+
+            var result = resp.data;
+
+            (result.length === 0) ? alert('Não foi possivel deletar a Registro!') : alert('Registro deletar com sucesso!', result);
+
+        });
+
+    }
+
+    loadTabela () {
+
+        return (                        
             <Table striped bordered hover>
                 <thead>
                     <tr>
@@ -66,109 +137,55 @@ function ListaGeneros () {
                     </tr>
                 </thead>
                 <tbody>
-                    {users.map((Genero) =>
-                    <tr>
-                            <td>{Genero.id}</td>
-                            <td><Form.Group className="mb-3"><Form.Control type="text" id={'nomeGenero-'+Genero.id} defaultValue={Genero.nome}/><Form.Text className="text"></Form.Text></Form.Group></td>
-                            <td><Button variant="success" onClick={() => clickHandler(0, Genero.id)}>Editar</Button></td>
-                            <td><Button variant="danger" onClick={() => clickHandler(1, Genero.id)}>Deletar</Button></td>
-                    </tr>
-                    )}
+                        {this.state.generos.map((genero) => 
+                            <tr>                        
+                                <td>{genero.id}</td>
+                                <td><Form.Group className="mb-3"><Form.Control type="text" id={'nomeGenero-'+genero.id} defaultValue={genero.descricao} key={genero.descricao}/><Form.Text className="text"></Form.Text></Form.Group></td>
+                                <td><Button variant="success" onClick={() => this.editarGenero(genero.id)}>Editar</Button></td>
+                                <td><Button variant="danger" onClick={() => this.deletarGenero(genero.id)}>Deletar</Button></td>
+                            </tr>                            
+                        )}
                 </tbody>
             </Table>
         );
 
     }
-
-    function clickHandler (op, id) {
         
-        if ((op == 1)) {
+    render () {
 
-            if (window.confirm('Deseja mesmo Deletar este Gênero? / Nome = '+document.getElementById('nomeGenero-'+id).value )) {
+        return (
 
-                // Requisição para deletar Gênero com base no id aqui
-                alert('Gênero deletado!!!');
+            <TableContainer>
+            <h1>CRUD GÊNEROS</h1><br></br>
+            
+            <Form.Group className="mb-3">
+                <Form.Label>Pesquisar Gênero por nomes:</Form.Label>
+                <Form.Control type="text" id="pesquisa-Genero" placeholder="Ex: joao.18music..." id="pesquisa-genero"/>
+                <Form.Text className="text-muted">
+                </Form.Text>
+            </Form.Group>
+            <Button variant="dark" onClick={() => this.pesquisarGenero()}>
+                Pesquisar
+            </Button><br></br>
+            {this.loadTabela()}
+            <Form>
+                    <h2>Cadastrar novo Gênero Musical</h2>
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Label>Descrição do Gênero</Form.Label>
+                        <Form.Control type="text" placeholder="Ex: Jazz..." id="criar-genero"/>
+                        <Form.Text className="text-muted">
+                        </Form.Text>
+                    </Form.Group> 
+                    <Button variant="dark" onClick={() => this.criarGenero()}>
+                        Cadastrar nova música
+                    </Button><br></br>
+                    </Form>
+            
+            </TableContainer>
 
-            }
-
-        } else {
-
-            if (window.confirm('Deseja mesmo Editar este Gênero? / Nome = '+document.getElementById('nomeGenero-'+id).value + ' / Autor = ' + document.getElementById('autorGenero-'+id).value + ' / Duração = ' + document.getElementById('duracaoGenero-'+id).value + ' ?' )) {
-
-                var nome = document.getElementById('nomeGenero-'+id).value;
-                
-                // Requisição para editar Gênero aqui
-                alert('Gênero editado!!!');
-
-            }
-
-        }
+        );
 
     }
-
-    function pesquisarGeneros () {
-
-        var nome = document.getElementById('pesquisa-Genero').value;
-
-        // Requisição para pesquisar Gênero aqui
-
-        // Alimentar lista de Gêneros com o resultado da requisição
-
-        console.log(Generos);
-
-        Generos = [
-            {
-                id: 1,
-                nome: "Jazz",           
-            }
-        ]
-
-        console.log(Generos);
-
-        setCount(atualizaTabela(Generos));
-
-    }
-
-    function novoGenero () {
-
-        var nome = nomeRef.current.value;
-
-        // Requisição para inserção aqui com base nos parametros passados acima
-
-    }
-
-    return (
-
-        <TableContainer>
-        <h1>CRUD GÊNEROS</h1><br></br>
-        {/* {load()} */}
-        <Form.Group className="mb-3">
-            <Form.Label>Pesquisar Gênero por nomes:</Form.Label>
-            <Form.Control type="text" id="pesquisa-Genero" placeholder="Ex: joao.18music..." />
-            <Form.Text className="text-muted">
-            </Form.Text>
-        </Form.Group>
-        <Button variant="dark" type="submit" onClick={() => pesquisarGeneros()}>
-            Pesquisar
-        </Button><br></br>
-        {count}
-        
-        <Form>
-                <h2>Cadastrar novo Gênero Musical</h2>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Descrição do Gênero</Form.Label>
-                    <Form.Control type="text" placeholder="Ex: Mar das Rosas..." ref={nomeRef}/>
-                    <Form.Text className="text-muted">
-                    </Form.Text>
-                </Form.Group> 
-                <Button variant="dark" onClick={() => novoGenero()}>
-                    Cadastrar nova música
-                </Button><br></br>
-                </Form>
-        
-        </TableContainer>
-
-    );
 
 }
 
