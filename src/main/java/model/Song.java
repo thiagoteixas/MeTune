@@ -2,21 +2,34 @@ package model;
 
 public class Song {
 
-	private String id;
+	private int id;
 	private String name;
 	private int duration;
+	private int author;
 	
-	public Song(String id, String name, int duration) {
+	public Song(int id, String name, int duration, int author) {
+      this.id = id;
+      this.name = name;
+      this.duration = duration;
+      this.author = author;
+  }
+	public Song(int id, String name, int duration) {
 		this.id = id;
 		this.name = name;
 		this.duration = duration;
+		this.author = -1;
 	}
 
-	public String getId() {
+	public Song(String name, int duration, int author) {
+	      this.name = name;
+	      this.duration = duration;
+	      this.author = author;
+	}
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -35,6 +48,14 @@ public class Song {
 	public void setDuration(int duration) {
 		this.duration = duration;
 	}
+	
+	public int getAuthor() {
+        return author;
+    }
+  
+    public void setAuthor(int author) {
+        this.author = author;
+    }
 
 	@Override
 	public String toString() {

@@ -2,27 +2,34 @@ package model;
 
 public class User {
 
-	private String id;
+	private int id;
 	private String email;
+	private String password;
 	private String username;
 	private boolean isPremium;
 	
 
-	public User(String id, String email, String username, boolean isPremium) {
-		super();
+	public User(int id, String email, String username, boolean isPremium) {
 		this.id = id;
 		this.email = email;
 		this.username = username;
 		this.isPremium = isPremium;
 	}
-	
-	
-	public String getId() {
+
+
+	public User(String email, String password, String username, boolean isPremium) {
+		this.email = email;
+		this.password = password;
+		this.username = username;
+		this.isPremium = isPremium;
+	}
+
+	public int getId() {
 		return id;
 	}
 
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -38,6 +45,16 @@ public class User {
 	public String getUsername() {
 		return username;
 	}
+
+	public String getPassword() {
+		return password;
+	}
+
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 
 	public void setUsername(String username) {
 		this.username = username;

@@ -1,0 +1,56 @@
+
+
+/* Inicio CSS header -----------------------------------*/ 
+
+.logo-header, .logo-metune-header {
+
+  margin: -0.5rem 0px -0.3rem;
+
+}
+
+.figure-img {
+
+  margin-bottom: 0rem !important;
+
+}
+
+.navbar.navbar-expand-lg.navbar-light.bg-light {
+
+  background: black !important;
+
+}
+
+.nav-link {
+
+  color: white !important; 
+  font-weight: bold !important;
+
+}
+
+.d-flex {
+
+  width: 25%;
+
+}
+
+.d-flex .btn {
+
+  width: 60%;
+
+}
+
+.me-auto.menu-header {
+
+  margin-left: auto !important;
+  margin-right: 80px !important;
+
+}
+
+.icon-header {
+
+  margin: 0px 10px;
+
+}
+
+
+/* Fim CSS header -----------------------------------*/ 

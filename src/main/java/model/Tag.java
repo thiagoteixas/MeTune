@@ -2,19 +2,23 @@ package model;
 
 public class Tag {
 
-	private String id;
+	private int id;
 	private String name;
 	
-	public Tag(String id, String name) {
+	public Tag(int id, String name) {
 		this.id = id;
 		this.name = name;
 	}
+	
+	public Tag(String name) {
+		this.name = name;
+	}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
