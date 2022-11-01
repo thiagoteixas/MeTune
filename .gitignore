@@ -1,6 +1,5 @@
 /target/
-.classpath
 env_file.txt
 ./metune/node_modules
 .project
-.settingsnode_modules
+.settings

@@ -2,13 +2,8 @@ package app;
 import static spark.Spark.*;
 
 import service.*;
-import model.*;
 import Utils.*;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import com.google.gson.Gson;
 
 public class Aplicacao {
   

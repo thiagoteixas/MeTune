@@ -27,15 +27,15 @@ public class TagService {
 //    int id = Integer.parseInt(req.queryParams("ID_musica"));
     String nome = req.queryParams("titulo");
     
-    String resp = "";
+//    String resp = "";
     Tag tag = new Tag(nome);
     
     
     if (TagDAO.insert(tag) == true) {
-      resp = "Tag (" + nome + ") inserida";
+//      resp = "Tag (" + nome + ") inserida";
       res.status(201);
     } else {
-        resp = "Tag (" + nome + ") não inserido!";
+//        resp = "Tag (" + nome + ") não inserido!";
         res.status(404); // 404 Not found
       }
     return tag;
@@ -77,15 +77,14 @@ public class TagService {
 		    return new Gson().toJson(preJson);
 	    } else {
 	      res.status(404);
+	      return ("{}");
 	    }
-	    
-	    return tag.toString();
 	  }
   
   public Tag update(Request req, Response res) {
     int id = Integer.parseInt(req.params(":id"));
     Tag tag = TagDAO.get(id);
-    String resp = "";       
+//    String resp = "";       
 
     if (tag != null) {
 //        tag.setName(req.queryParams("ID_Musica"));
@@ -93,10 +92,10 @@ public class TagService {
     	tag.setName(req.queryParams("titulo"));
         TagDAO.update(tag);
         res.status(200); // success
-        resp = "Tag (ID " + tag.getId() + ") atualizado!";
+//        resp = "Tag (ID " + tag.getId() + ") atualizado!";
     } else {
         res.status(404); // 404 Not found
-        resp = "Tag (ID \" + tag.getId() + \") não encontrado!";
+//        resp = "Tag (ID \" + tag.getId() + \") não encontrado!";
         tag = null;
     }
     return tag;
@@ -105,7 +104,7 @@ public class TagService {
   public boolean delete(Request req, Response res) {
     int id = Integer.parseInt(req.params(":id"));
     Tag tag = TagDAO.get(id);
-    String resp = "";
+//    String resp = "";
     boolean status = false;
     
     if (tag != null) {
