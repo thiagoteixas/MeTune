@@ -86,7 +86,7 @@ public class TagService {
    */
   public String getAll(Request req, Response res) {
 	    int id = Integer.parseInt(req.params(":id"));       
-	    Tag tag = (Tag) TagDAO.get("");
+	    Tag tag = (Tag) TagDAO.get();
 
 	    if (tag != null) {
 	    	
