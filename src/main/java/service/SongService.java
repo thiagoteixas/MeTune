@@ -7,8 +7,6 @@ import com.google.gson.Gson;
 
 import dao.SongDAO;
 import model.Song;
-import model.User;
-import service.UserService;
 import spark.Request;
 import spark.Response;
 
@@ -85,7 +83,7 @@ public class SongService {
 //	    	
 //	    }
 	    
-	    String autorNome = "";
+//	    String autorNome = "";
 	    
 //	    preJson,put("autor", )
 	    
@@ -96,7 +94,24 @@ public class SongService {
       res.status(404);
     }
     
-    return song.toString();
+    return new Gson().toJson("{}");
+  }
+  
+  public Song getByName(Request req, Response res) {
+	 String name = req.queryParams("titulo");
+	 Song song = SongDAO.getByName(name);
+	 
+	 if (song != null) {
+	    	
+		    
+		    res.status(200);
+		    
+		    return song;
+	    } else {
+	      res.status(404);
+	    }
+	    
+	    return null;
   }
   
   /**
@@ -108,7 +123,7 @@ public class SongService {
   public Song update(Request req, Response res) {
     int id = Integer.parseInt(req.params(":id"));
     Song song = SongDAO.get(id);
-    String resp = "";       
+//    String resp = "";       
 
     if (song != null) {
 //        song.setAuthor(Integer.parseInt(req.queryParams("ID_Musica")));
@@ -116,10 +131,10 @@ public class SongService {
         song.setDuration(Integer.parseInt(req.queryParams("duracao")));
         SongDAO.update(song);
         res.status(200); // success
-        resp = "Musica (ID " + song.getId() + ") atualizado!";
+//        resp = "Musica (ID " + song.getId() + ") atualizado!";
     } else {
         res.status(404); // 404 Not found
-        resp = "Musica (ID \" + song.getId() + \") não encontrado!";
+//        resp = "Musica (ID \" + song.getId() + \") não encontrado!";
         song = null;
     }
     return song;
@@ -134,7 +149,7 @@ public class SongService {
   public boolean delete(Request req, Response res) {
     int id = Integer.parseInt(req.params(":id"));
     Song song = SongDAO.get(id);
-    String resp = "";
+//    String resp = "";
     boolean status = false;
     
     if (song != null) {

@@ -2,13 +2,8 @@ package app;
 import static spark.Spark.*;
 
 import service.*;
-import model.*;
 import Utils.*;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import com.google.gson.Gson;
 
 public class Aplicacao {
   
@@ -39,6 +34,7 @@ public class Aplicacao {
 	  
 	  post("/tag", (request, response) -> TagService.insert(request, response));
       get("/tag/:id", (request, response) -> TagService.get(request, response));
+      get("/tag", (request, response) -> TagService.getAll(request, response));
       put("/tag/update/:id", (request, response) -> TagService.update(request, response));
       get("/tag/delete/:id", (request, response) -> TagService.delete(request, response));
       

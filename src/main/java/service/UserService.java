@@ -2,6 +2,10 @@ package service;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.google.gson.Gson;
 
 import dao.UserDAO;
 import model.User;
@@ -56,16 +60,16 @@ public class UserService {
     String nome = req.queryParams("nome");
     boolean tipo_cadastro = Boolean.parseBoolean(req.queryParams("cadastro"));
     
-    String resp = "";
+//    String resp = "";
      
     User user = new User(email, toMD5(senha), nome, tipo_cadastro);
       
    
     if (UserDAO.insert(user) == true) {
-      resp = "Usuário (" + nome + ") inserido";
+//      resp = "Usuário (" + nome + ") inserido";
       res.status(201);
     } else {
-        resp = "Usuário (" + nome + ") não inserido!";
+//        resp = "Usuário (" + nome + ") não inserido!";
         res.status(404); // 404 Not found
       }
 
@@ -79,17 +83,25 @@ public class UserService {
    * @param res resposta para o servico que ele foi chamado
    * @return a classe na sua formatacao como toString, apresentado os atributos dela
    */
-  public User get(Request req, Response res) {
+  public String get(Request req, Response res) {
     int id = Integer.parseInt(req.params(":id"));       
     User user = (User) UserDAO.get(id);
     
     if (user != null) {
-      res.status(200);
+      
+	    Map<String, Object> preJson = new HashMap<>();
+	    preJson.put("id", id);
+	    preJson.put("username", user.getUsername());
+	    preJson.put("email", user.getEmail());
+	    res.type("aplication/json");
+	    res.status(200);
+	    
+	    return new Gson().toJson(preJson);
     } else {
       res.status(404);
     }
     
-    return user;
+    return new Gson().toJson("{}");
   }
   
   /**
@@ -101,7 +113,7 @@ public class UserService {
   public User update(Request req, Response res) {
     int id = Integer.parseInt(req.params(":id"));
     User user = UserDAO.get(id);
-    String resp = "";       
+//    String resp = "";       
 
     if (user != null) {
 //        user.setId(Integer.parseInt(req.queryParams("ID_Usuario")));
@@ -110,10 +122,10 @@ public class UserService {
         user.setPremium(Boolean.parseBoolean(req.queryParams("cadastro")));
         UserDAO.update(user);
         res.status(200); // success
-        resp = "Usuário (ID " + user.getId() + ") atualizado!";
+//        resp = "Usuário (ID " + user.getId() + ") atualizado!";
     } else {
         res.status(404); // 404 Not found
-        resp = "Usuário (ID \" + user.getId() + \") não encontrado!";
+//        resp = "Usuário (ID \" + user.getId() + \") não encontrado!";
         user = null;
     }
     return user;
@@ -128,7 +140,7 @@ public class UserService {
   public boolean delete(Request req, Response res) {
     int id = Integer.parseInt(req.params(":id"));
     User user = UserDAO.get(id);
-    String resp = "";
+//    String resp = "";
     boolean status = false;
     
     if (user != null) {

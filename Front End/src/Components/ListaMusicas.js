@@ -24,11 +24,11 @@ class Listamusicas extends React.Component {
 
     componentDidMount() {        
         
-        fetch("http://localhost/modelo/atividade/getall")
-        .then(result => result.json())
-        .then(dados => {
-            this.setState({musicas : dados});
-        });
+        fetch('http://localhost:5432/song/')
+          .then((result) => result.json())
+          .then((dados) => {
+            this.setState({ musicas: dados });
+          });
         
     }
 
@@ -38,7 +38,7 @@ class Listamusicas extends React.Component {
 
     }
 
-    criarmusica () {
+    criarMusica () {
 
         var nome = document.getElementById('criar-musica-nome');
         var autor = document.getElementById('criar-musica-autor');
@@ -50,24 +50,34 @@ class Listamusicas extends React.Component {
             duracao : duracao.value
         }
 
-        Axios.post('http://localhost/modelo/projeto/create', qs.stringify((params)))
-        .then(resp => {
-
+        Axios.post('http://localhost:5432/song/', qs.stringify(params)).then(
+          (resp) => {
             this.setState(resp.data);
 
-            (resp.data.length === 0) ? alert('Não foi possivel criar o Registro!') : alert('Registro criado com sucesso!', resp.data);
-
-        });
+            resp.data.length === 0
+              ? alert('Não foi possivel criar o Registro!')
+              : alert('Registro criado com sucesso!', resp.data);
+          }
+        );
 
     }
 
-    pesquisarmusica () {
+    pesquisarMusica () {
         
         var nome = document.getElementById('pesquisa-musica');
 
         const params = {
             nome : nome.value
         }
+
+        Axios.post(`http://localhost:5432/song/:${nome}`, qs.stringify((params)))
+        .then(resp => {
+
+            this.setState(resp.data);
+
+            (resp.data.length === 0) ? alert('Não foi possivel encontrar o Registro!') : alert('Registro encontrado!', resp.data);
+
+        });
 
         Axios.post('http://localhost/modelo/projeto/get', qs.stringify((params)))
         .then(resp => {
@@ -81,37 +91,31 @@ class Listamusicas extends React.Component {
 
     }
 
-    editarmusica (id) {
+    editarMusica (id) {
 
         if (!window.confirm('Deseja editar esse registro??')) return;
     
         console.log('teste');
-
         var nome = document.getElementById('nomemusica-'+id);
-        var autor = document.getElementById('autormusica-'+id);
-        var duracao = document.getElementById('duracaomusica-'+id);
 
         const params = {
-            id : id,
-            nome : nome.value,
-            autor : autor.value,
-            duracao : duracao.value
-        }
+            id: id,
+            descricao: nome.value
+        };
 
 
-
-        Axios.post('http://localhost/modelo/projeto/update', qs.stringify((params)))
+        Axios.post(`http://localhost:5432/song/update/:${id}`, qs.stringify((params)))
         .then(resp => {
 
             var result = resp.data;
 
-            (result.length === 0) ? alert('Não foi possivel editar o Registro!') : alert('Registro editado com sucesso!', result);
+            (result.length === 0) ? alert('Não foi possivel editar a Registro!') : alert('Registro editada com sucesso!', result);
 
         });
 
     }
 
-    deletarmusica (id) {
+    deletarMusica (id) {
 
         console.log('id deleta',id);
 
@@ -122,12 +126,12 @@ class Listamusicas extends React.Component {
         };
 
 
-        Axios.post('http://localhost/modelo/projeto/delete', qs.stringify((params)))
+        Axios.post(`http://localhost:5432/song/delete/:${id}`, qs.stringify((params)))
         .then(resp => {
 
             var result = resp.data;
 
-            (result.length === 0) ? alert('Não foi possivel deletar a Registro!') : alert('Registro deletado com sucesso!', result);
+            (result.length === 0) ? alert('Não foi possivel deletar a Registro!') : alert('Registro deletar com sucesso!', result);
 
         });
 
@@ -151,11 +155,11 @@ class Listamusicas extends React.Component {
                         {this.state.musicas.map((musica) => 
                             <tr>                        
                                 <td>{musica.id}</td>
-                                <td><Form.Group className="mb-3"><Form.Control type="text" id={'nomemusica-'+musica.id} defaultValue={musica.nome} key={musica.nome}/><Form.Text className="text"></Form.Text></Form.Group></td>
+                                <td><Form.Group className="mb-3"><Form.Control type="text" id={'nomemusica-'+musica.id} defaultValue={musica.descricao} key={musica.nome}/><Form.Text className="text"></Form.Text></Form.Group></td>
                                 <td><Form.Group className="mb-3"><Form.Control type="text" id={'autormusica-'+musica.id} defaultValue={musica.autor} key={musica.autor}/><Form.Text className="text"></Form.Text></Form.Group></td>
                                 <td><Form.Group className="mb-3"><Form.Control type="text" id={'duracaomusica-'+musica.id} defaultValue={musica.duracao} key={musica.duracao}/><Form.Text className="text"></Form.Text></Form.Group></td>
-                                <td><Button variant="success" onClick={() => this.editarmusica(musica.id)}>Editar</Button></td>
-                                <td><Button variant="danger" onClick={() => this.deletarmusica(musica.id)}>Deletar</Button></td>
+                                <td><Button variant="success" onClick={() => this.editarMusica(musica.id)}>Editar</Button></td>
+                                <td><Button variant="danger" onClick={() => this.deletarMusica(musica.id)}>Deletar</Button></td>
                             </tr>                            
                         )}
                 </tbody>
@@ -173,11 +177,11 @@ class Listamusicas extends React.Component {
             
             <Form.Group className="mb-3">
                 <Form.Label>Pesquisar Músicas por nome:</Form.Label>
-                <Form.Control type="text" id="pesquisa-musica" placeholder="Ex: joao.18music..."/>
+                <Form.Control type="text" id="pesquisa-musica" placeholder="Ex: joao.18music..." id="pesquisa-musica"/>
                 <Form.Text className="text-muted">
                 </Form.Text>
             </Form.Group>
-            <Button variant="dark" onClick={() => this.pesquisarmusica()}>
+            <Button variant="dark" onClick={() => this.pesquisarMusica()}>
                 Pesquisar
             </Button><br></br>
             {this.loadTabela()}
@@ -201,7 +205,7 @@ class Listamusicas extends React.Component {
                         <Form.Text className="text-muted">
                         </Form.Text>
                     </Form.Group> 
-                    <Button variant="dark" onClick={() => this.criarmusica()}>
+                    <Button variant="dark" onClick={() => this.criarMusica()}>
                         Cadastrar nova música
                     </Button><br></br>
                     </Form>

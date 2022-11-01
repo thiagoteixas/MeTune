@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 import React from 'react';
 
-
+>>>>>>> main
 import Axios from 'axios';
 import qs from 'qs';
 
@@ -24,21 +24,19 @@ class ListaGeneros extends React.Component {
 
     }
 
-
     componentDidMount() {        
         
-        fetch("http://localhost/modelo/atividade/getall")
-        .then(result => result.json())
-        .then(dados => {
-            this.setState({generos : dados});
-        });
+        fetch('localhost:4567/tag')
+          .then((result) => result.json())
+          .then((dados) => {
+            this.setState({ generos: dados });
+          });
         
     }
 
     componentDidUpdate () {
 
         console.log('update');
-
 
     }
 
@@ -50,15 +48,15 @@ class ListaGeneros extends React.Component {
             descricao : nome.value
         }
 
-        Axios.post('http://localhost/modelo/projeto/create', qs.stringify((params)))
-        .then(resp => {
-
+        Axios.post('localhost:4567/tag/', qs.stringify(params)).then(
+          (resp) => {
             this.setState(resp.data);
 
-            (resp.data.length === 0) ? alert('Não foi possivel criar o Registro!') : alert('Registro criado com sucesso!', resp.data);
-
-        });
-
+            resp.data.length === 0
+              ? alert('Não foi possivel criar o Registro!')
+              : alert('Registro criado com sucesso!', resp.data);
+          }
+        );
     }
 
     pesquisarGenero () {
@@ -69,7 +67,7 @@ class ListaGeneros extends React.Component {
             nome : nome.value
         }
 
-        Axios.post('http://localhost/modelo/projeto/get', qs.stringify((params)))
+        Axios.post('localhost:4567/tag/2', qs.stringify((params)))
         .then(resp => {
 
             this.setState(resp.data);
@@ -94,14 +92,12 @@ class ListaGeneros extends React.Component {
             descricao: nome.value
         };
 
+        Axios.post(`localhost:4567/tag/update/${id}`, qs.stringify(params)).then((resp) => {
+          var result = resp.data;
 
-        Axios.post('http://localhost/modelo/projeto/update', qs.stringify((params)))
-        .then(resp => {
-
-            var result = resp.data;
-
-            (result.length === 0) ? alert('Não foi possivel editar a Registro!') : alert('Registro editada com sucesso!', result);
-
+          result.length === 0
+            ? alert('Não foi possivel editar a Registro!')
+            : alert('Registro editada com sucesso!', result);
         });
 
     }
@@ -116,8 +112,7 @@ class ListaGeneros extends React.Component {
             id: id.toString(),
         };
 
-
-        Axios.post('http://localhost/modelo/projeto/delete', qs.stringify((params)))
+        Axios.post(`http://localhost:4567/tag/delete/${id}`, qs.stringify((params)))
         .then(resp => {
 
             var result = resp.data;
@@ -129,7 +124,6 @@ class ListaGeneros extends React.Component {
     }
 
     loadTabela () {
-
 
         return (                        
             <Table striped bordered hover>
@@ -165,7 +159,7 @@ class ListaGeneros extends React.Component {
             
             <Form.Group className="mb-3">
                 <Form.Label>Pesquisar Gênero por nomes:</Form.Label>
-                <Form.Control type="text" id="pesquisa-Genero" placeholder="Ex: joao.18music..."/>
+                <Form.Control type="text" placeholder="Ex: joao.18music..." id="pesquisa-genero"/>
                 <Form.Text className="text-muted">
                 </Form.Text>
             </Form.Group>
