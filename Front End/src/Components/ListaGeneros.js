@@ -2,8 +2,10 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
 import 'bootstrap/dist/css/bootstrap.css';
+
 import React from 'react';
 
+>>>>>>> main
 import Axios from 'axios';
 import qs from 'qs';
 
@@ -55,7 +57,6 @@ class ListaGeneros extends React.Component {
               : alert('Registro criado com sucesso!', resp.data);
           }
         );
-
     }
 
     pesquisarGenero () {
@@ -91,7 +92,6 @@ class ListaGeneros extends React.Component {
             descricao: nome.value
         };
 
-
         Axios.post(`localhost:4567/tag/update/${id}`, qs.stringify(params)).then((resp) => {
           var result = resp.data;
 
@@ -111,7 +111,6 @@ class ListaGeneros extends React.Component {
         const params = {
             id: id.toString(),
         };
-
 
         Axios.post(`http://localhost:4567/tag/delete/${id}`, qs.stringify((params)))
         .then(resp => {

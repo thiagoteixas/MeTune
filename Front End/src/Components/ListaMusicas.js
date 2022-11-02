@@ -79,6 +79,15 @@ class Listamusicas extends React.Component {
 
         });
 
+        Axios.post('http://localhost/modelo/projeto/get', qs.stringify((params)))
+        .then(resp => {
+
+            this.setState(resp.data);
+
+            (resp.data.length === 0) ? alert('Não foi possivel encontrar o Registro!') : alert('Registro encontrado!', resp.data);
+
+        });
+
 
     }
 
@@ -87,7 +96,6 @@ class Listamusicas extends React.Component {
         if (!window.confirm('Deseja editar esse registro??')) return;
     
         console.log('teste');
-
         var nome = document.getElementById('nomemusica-'+id);
 
         const params = {

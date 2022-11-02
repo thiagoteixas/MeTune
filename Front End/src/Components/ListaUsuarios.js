@@ -2,13 +2,13 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
 import 'bootstrap/dist/css/bootstrap.css';
+import React from 'react';
 
 import Axios from 'axios';
 import qs from 'qs';
 
 import React, { useState, useEffect, useRef } from 'react';
 
-import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 import { TableContainer } from './styles/Styles.js';
@@ -444,4 +444,4 @@ class ListaUsuarios extends React.Component {
 
 // }
 
-export default ListaUsuarios;
+export default Listausuarios;

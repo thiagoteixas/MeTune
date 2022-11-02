@@ -13,6 +13,9 @@ import spark.Response;
 public class SongService {
   private SongDAO SongDAO;
   
+  /**
+   * incializar novo servico tentando conectar e imprimindo qualquer erro que possa ocorrer  
+   */
   public SongService() {
     try {
       SongDAO = new SongDAO();
@@ -22,6 +25,13 @@ public class SongService {
     }
   }
   
+  /**
+   * Dado uma requisicao com os paremetros sendo passados pela a URL pegar os paremetros e criar um nova classe e 
+   * inserir no banco 
+   * @param req requisicao que o metodo vai receber 
+   * @param res resposta que o metodo vai mandar para a pagina, esse uma string
+   * @return string que indica se a classe foi inserida ou nao no banco de dados
+   */
   public String insert(Request req, Response res) {
 //    int id = Integer.parseInt(req.queryParams("ID_musica"));
     String titulo = req.queryParams("titulo");
@@ -52,6 +62,12 @@ public class SongService {
     return resp;
   }
   
+  /**
+   * Pegar penas um registro no banco de dados, dado um paremetro nomeado na URL
+   * @param req requerimento para pegar os dados necessarios
+   * @param res resposta para o servico que ele foi chamado
+   * @return retorna uma string em formato de Json para a pagina principal contendo a class em formato Json
+   */
   public String get(Request req, Response res) {
     int id = Integer.parseInt(req.params(":id"));       
     Song song = (Song) SongDAO.get(id);
@@ -98,6 +114,12 @@ public class SongService {
 	    return null;
   }
   
+  /**
+   * Dado uma URL atualizar um registro no banco de dados, pegando os dados atualizado da URL
+   * @param req requisicao para pedir dados
+   * @param res reposta para o metodo que chamou esse metodo
+   * @return retorna a class que foi atualizada com as novas informacoes
+   */
   public Song update(Request req, Response res) {
     int id = Integer.parseInt(req.params(":id"));
     Song song = SongDAO.get(id);
@@ -118,6 +140,12 @@ public class SongService {
     return song;
   }
   
+  /**
+   * deleta um registro dado um id na URL
+   * @param req requisisao para pegar os dados
+   * @param res reposta para mandar dados 
+   * @return boolean confirmando a deletacao do registro do banco de dados
+   */
   public boolean delete(Request req, Response res) {
     int id = Integer.parseInt(req.params(":id"));
     Song song = SongDAO.get(id);
@@ -134,12 +162,6 @@ public class SongService {
     return status;
   }
   
-  /*
-   * public Object addSong() {}
-   * public Object getSong() {}
-   * public Object updateSong() {}
-   * public Object deleteSong() {}
-   * */
 }
 
 
