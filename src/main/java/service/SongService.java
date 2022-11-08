@@ -36,7 +36,7 @@ public class SongService {
 //    int id = Integer.parseInt(req.queryParams("ID_musica"));
     String titulo = req.queryParams("titulo");
     int duracao = Integer.parseInt(req.queryParams("duracao"));
-    int autor = 1;
+    int autor = -1;
     
     System.out.println("test");
     

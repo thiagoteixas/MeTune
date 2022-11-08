@@ -115,7 +115,7 @@ public class SongDAO extends DAO {
 	}
 	
 	/**
-	 * Atualiza uma classe seguindo um novo objeto sendo passado por paremetro
+	 * Retorna uma musica pela o nome dela
 	 * @param song class a ser autalizada
 	 * @return valida se a classe foi autalizado com sucesso.
 	 */
@@ -135,6 +135,31 @@ public class SongDAO extends DAO {
 		}
 		return song;
 	}
+	
+	/**
+	 * Procura uma musica pela o id do autor
+	 * @param id do autor a ser pesquisado
+	 * @return Uma lista com todos as musicas pelo o autor
+	 */
+	public List<Song> getByAuthor(int id) {
+		List<Song> listaMusicas = new ArrayList<Song>();
+		
+		try {
+			Statement st = conexao.createStatement();
+			String sql = "SELECT * FROM song WHERE author_id = " + id;
+			System.out.println(sql);
+			ResultSet rs = st.executeQuery(sql);	
+			while(rs.next()){            
+	        	Song s = new Song(rs.getInt("id"), rs.getString("name"), rs.getInt("duration"), rs.getInt("author_id"));
+	        	listaMusicas.add(s);
+	        }
+	        st.close();
+		} catch (SQLException u) {  
+			throw new RuntimeException(u);
+		}
+		return listaMusicas;
+	}
+	
 	
 	public boolean update(Song song) {
 		boolean status = false;
