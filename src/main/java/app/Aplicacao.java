@@ -24,8 +24,10 @@ public class Aplicacao {
        		return new Gson().toJson(map);
 //       		return map;
        });*/
+	 
 	  // Song routes
 	  post("/song", (request, response) -> SongService.insert(request, response));
+	  get("/song", (request, response) -> SongService.getAll(request, response));
 	  get("/song/:id", (request, response) -> SongService.get(request, response));
 	  put("/song/update/:id", (request, response) -> SongService.update(request, response));
 	  get("/song/delete/:id", (request, response) -> SongService.delete(request, response));

@@ -71,8 +71,22 @@ public class SongDAO extends DAO {
 		return song;
 	}
 	
-	public List<Song> get() {
-		return get("");
+	public List<Song> getAll() {
+		List<Song> songs = new ArrayList<Song>();
+		
+		try {
+			Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+			String sql = "SELECT * FROM song ";
+			ResultSet rs = st.executeQuery(sql);
+	        while(rs.next()) {	            	
+	        	Song s = new Song(rs.getInt("id"), rs.getString("name"), rs.getInt("duration"), rs.getInt("author_id"));
+	        	songs.add(s);
+	        }
+	        st.close();
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+		return songs;
 	}
 	
 	public List<Song> getOrderById() {
