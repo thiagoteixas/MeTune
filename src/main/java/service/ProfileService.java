@@ -14,6 +14,7 @@ import spark.Response;
 public class ProfileService {
 
 	private SongDAO SongDAO;
+	private Gson jsonHelper;
 	
 	  /**
 	   * inicializar novo servico tentando conectar e imprimindo qualquer erro que possa ocorrer  
@@ -22,6 +23,7 @@ public class ProfileService {
 	    try {
 	      SongDAO = new SongDAO();
 	      SongDAO.conectar();
+	      jsonHelper = new Gson();
 	    } catch (Exception e) {
 	      System.out.println(e.getMessage());
 	    }
@@ -31,6 +33,7 @@ public class ProfileService {
 		
 		String aux = "{\n\t\"Dados vazios\"}";
 		String resp = "";
+		response.type("aplication/json");
 		int author_id = Integer.parseInt(request.params(":id"));
 		
 		if ( author_id <= 0 ) {
@@ -43,7 +46,12 @@ public class ProfileService {
 			return aux;
 		}
 		
-		resp = "{\"musicas\": " + new Gson().toJson(musicas) + ",";
+		for (Song song : musicas) {
+			song.addTags(SongDAO.getSongTags(song.getAuthor()));
+//			System.out.println(jsonHelper.toJson(song));
+		}
+		
+		resp = "{\"musicas\": " + jsonHelper.toJson(musicas) + ",";
 		
 		UserDAO userhelper = new UserDAO();
 		User author = userhelper.get(author_id);
@@ -52,7 +60,7 @@ public class ProfileService {
 			return aux;
 		}
 		
-		resp = resp + "\"dados\":" + new Gson().toJson(author) + "}";
+		resp = resp + "\"dados\":" + jsonHelper.toJson(author) + "}";
 		
 		
 		return resp;
