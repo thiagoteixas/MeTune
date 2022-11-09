@@ -36,7 +36,8 @@ public class SongService {
    * @return string que indica se a classe foi inserida ou nao no banco de dados
    */
   public String insert(Request req, Response res) {
-//    int id = Integer.parseInt(req.queryParams("ID_musica"));
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Method", "POST");
     String titulo = req.queryParams("titulo");
     int duracao = Integer.parseInt(req.queryParams("duracao"));
     int autor = -1;
@@ -57,8 +58,8 @@ public class SongService {
       System.out.println("Música (" + titulo + ") inserida");
       res.status(201);
     } else {
-        resp = "Produto (" + titulo + ") não inserido!";
-        System.out.println("Produto (" + titulo + ") não inserido!");
+        resp = "Música (" + titulo + ") não inserido!";
+        System.out.println("Música (" + titulo + ") não inserido!");
         res.status(404); // 404 Not found
       }
 
@@ -72,6 +73,8 @@ public class SongService {
    * @return retorna uma string em formato de Json para a pagina principal contendo a class em formato Json
    */
   public String get(Request req, Response res) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Method", "GET");
     int id = Integer.parseInt(req.params(":id"));       
     Song song = (Song) SongDAO.get(id);
     
@@ -101,6 +104,10 @@ public class SongService {
   }
   
   public String getAll(Request req, Response res) {
+	  res.type("aplication/json");
+	  res.header("Access-Control-Allow-Origin", "*");
+	  res.header("Access-Control-Allow-Method", "GET");
+	  
 	  List<Song> songs = (List <Song>) SongDAO.getAll();
 	  
 	  if(songs != null) {
@@ -114,6 +121,9 @@ public class SongService {
   }
   
   public Song getByName(Request req, Response res) {
+	 res.type("aplication/json");
+	 res.header("Access-Control-Allow-Origin", "*");
+	 res.header("Access-Control-Allow-Method", "GET");
 	 String name = req.queryParams("titulo");
 	 Song song = SongDAO.getByName(name);
 	 
@@ -137,6 +147,8 @@ public class SongService {
    * @return retorna a class que foi atualizada com as novas informacoes
    */
   public Song update(Request req, Response res) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Method", "PUT");
     int id = Integer.parseInt(req.params(":id"));
     Song song = SongDAO.get(id);
 //    String resp = "";       
@@ -163,6 +175,8 @@ public class SongService {
    * @return boolean confirmando a deletacao do registro do banco de dados
    */
   public boolean delete(Request req, Response res) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Method", "GET");
     int id = Integer.parseInt(req.params(":id"));
     Song song = SongDAO.get(id);
 //    String resp = "";

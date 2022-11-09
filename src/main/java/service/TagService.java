@@ -34,6 +34,8 @@ public class TagService {
    * @return tag retorna a tag que foi criada como resposta 
    */
   public Tag insert(Request req, Response res) {
+	  res.header("Access-Control-Allow-Origin", "*");
+	  res.header("Access-Control-Allow-Method", "POST");
 //    int id = Integer.parseInt(req.queryParams("ID_musica"));
     String nome = req.queryParams("titulo");
     
@@ -59,6 +61,9 @@ public class TagService {
    * @return retorna uma string em formato de Json para a pagina principal contendo a class em formato Json
    */
   public String get(Request req, Response res) {
+	res.type("aplication/json");
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Method", "GET");
     int id = Integer.parseInt(req.params(":id"));       
     Tag tag = (Tag) TagDAO.get(id);
 
@@ -67,7 +72,6 @@ public class TagService {
 	    Map<String, Object> preJson = new HashMap<>();
 	    preJson.put("id", id);
 	    preJson.put("nome", tag.getName());
-	    res.type("aplication/json");
 	    res.status(200);
 	    
 	    return new Gson().toJson(preJson);
@@ -85,7 +89,11 @@ public class TagService {
    * @return retorna a class que foi atualizada com as novas informacoes
    */
   public String getAll(Request req, Response res) {
-	    int id = Integer.parseInt(req.params(":id"));       
+	    
+	  res.type("aplication/json");
+	  res.header("Access-Control-Allow-Origin", "*");
+	  res.header("Access-Control-Allow-Method", "GET");
+	  int id = Integer.parseInt(req.params(":id"));       
 	    Tag tag = (Tag) TagDAO.get();
 
 	    if (tag != null) {
@@ -93,7 +101,6 @@ public class TagService {
 		    Map<String, Object> preJson = new HashMap<>();
 		    preJson.put("id", id);
 		    preJson.put("nome", tag.getName());
-		    res.type("aplication/json");
 		    res.status(200);
 		    
 		    return new Gson().toJson(preJson);
@@ -104,6 +111,9 @@ public class TagService {
 	  }
   
   public Tag update(Request req, Response res) {
+	  
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Method", "PUT");
     int id = Integer.parseInt(req.params(":id"));
     Tag tag = TagDAO.get(id);
 //    String resp = "";       
@@ -130,6 +140,8 @@ public class TagService {
    * @return boolean confirmando a deletacao do registro do banco de dados
    */
   public boolean delete(Request req, Response res) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Method", "GET");
     int id = Integer.parseInt(req.params(":id"));
     Tag tag = TagDAO.get(id);
 //    String resp = "";

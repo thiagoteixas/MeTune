@@ -54,7 +54,8 @@ public class UserService {
    * @return nova class que acabou de ser criada com resposta
    */
   public User insert(Request req, Response res) {
-//    int id = Integer.parseInt(req.queryParams("ID_usuario"));
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Method", "POST");
     String email = req.queryParams("email");
     String senha = req.queryParams("senha");
     String nome = req.queryParams("nome");
@@ -84,6 +85,9 @@ public class UserService {
    * @return a classe na sua formatacao como toString, apresentado os atributos dela
    */
   public String get(Request req, Response res) {
+	res.type("aplication/json");
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Method", "GET");
     int id = Integer.parseInt(req.params(":id"));       
     User user = (User) UserDAO.get(id);
     
@@ -93,7 +97,6 @@ public class UserService {
 	    preJson.put("id", id);
 	    preJson.put("username", user.getUsername());
 	    preJson.put("email", user.getEmail());
-	    res.type("aplication/json");
 	    res.status(200);
 	    
 	    return new Gson().toJson(preJson);
@@ -111,6 +114,8 @@ public class UserService {
    * @return retorna a class que foi atualizada com as novas informacoes
    */
   public User update(Request req, Response res) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Method", "PUT");
     int id = Integer.parseInt(req.params(":id"));
     User user = UserDAO.get(id);
 //    String resp = "";       
@@ -138,6 +143,8 @@ public class UserService {
    * @return boolean confirmando a deletacao do registro do banco de dados
    */
   public boolean delete(Request req, Response res) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Method", "GET");
     int id = Integer.parseInt(req.params(":id"));
     User user = UserDAO.get(id);
 //    String resp = "";

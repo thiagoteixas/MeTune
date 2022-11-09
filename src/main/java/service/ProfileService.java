@@ -30,6 +30,8 @@ public class ProfileService {
 	  }
 	
 	public String get(Request request, Response response) {
+		response.header("Access-Control-Allow-Origin", "*");
+		response.header("Access-Control-Allow-Method", "GET");
 		
 		String aux = "{\n\t\"Dados vazios\"}";
 		String resp = "";
