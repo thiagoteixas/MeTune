@@ -1,11 +1,15 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Song {
 
 	private int id;
 	private String name;
 	private int duration;
 	private int author;
+	private List<String> tags;
 	
 	public Song(int id, String name, int duration, int author) {
       this.id = id;
@@ -55,6 +59,10 @@ public class Song {
   
     public void setAuthor(int author) {
         this.author = author;
+    }
+    
+    public void addTags (List<String> list) {
+    	this.tags = list;
     }
 
 	@Override

@@ -137,6 +137,29 @@ public class SongDAO extends DAO {
 	}
 	
 	/**
+	 * Procura todas as tag associadas a uma musica 
+	 * @param id da musica a ser pesquisada
+	 * @return Uma lista com todas as tags da musica
+	 */
+	public List<String> getSongTags(int id) {
+		List<String> listaTags = new ArrayList<String>();
+		
+		try {
+			Statement st = conexao.createStatement();
+			String sql = "SELECT b.name FROM tag as b INNER JOIN song_tag as c ON ( b.id = c.tag_id ) WHERE c.song_id = " + id;
+//			System.out.println(sql);
+			ResultSet rs = st.executeQuery(sql);	
+			while(rs.next()){            
+	        	listaTags.add(rs.getString("name"));
+	        }
+	        st.close();
+		} catch (SQLException u) {  
+			throw new RuntimeException(u);
+		}
+		return listaTags;
+	}
+	
+	/**
 	 * Procura uma musica pela o id do autor
 	 * @param id do autor a ser pesquisado
 	 * @return Uma lista com todos as musicas pelo o autor
