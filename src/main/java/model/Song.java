@@ -59,7 +59,7 @@ public class Song {
 
 	@Override
 	public String toString() {
-		return "Song [id=" + id + ", name=" + name + ", duration=" + duration + "]";
+		return "Song [id=" + id + ", name=" + name + ", duration=" + duration + " author_id="+ author + "]";
 	}
 	
 }

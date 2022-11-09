@@ -1,12 +1,15 @@
 package service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.google.gson.Gson;
 
 import dao.SongDAO;
+import dao.UserDAO;
 import model.Song;
+import model.User;
 import spark.Request;
 import spark.Response;
 
@@ -95,6 +98,19 @@ public class SongService {
     }
     
     return new Gson().toJson("{}");
+  }
+  
+  public String getAll(Request req, Response res) {
+	  List<Song> songs = (List <Song>) SongDAO.getAll();
+	  
+	  if(songs != null) {
+		 System.out.println(songs);
+		 res.status(200);
+		 return new Gson().toJson(songs);
+	  } else {
+		 res.status(404);
+	  }
+	  return "Erro";
   }
   
   public Song getByName(Request req, Response res) {

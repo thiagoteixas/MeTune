@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Song;
+import model.User;
+
+import dao.UserDAO;
 
 public class SongDAO extends DAO {
 	
@@ -71,8 +74,28 @@ public class SongDAO extends DAO {
 		return song;
 	}
 	
-	public List<Song> get() {
-		return get("");
+	public List<Song> getAll() {
+		List<Song> songs = new ArrayList<Song>();
+		
+		try {
+			Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+			//String sql = "SELECT * from public.user";
+			String sql = "SELECT song.id, song.name, song.duration, song.author_id, public.user.username FROM song ";
+			sql += "LEFT JOIN public.user ON song.author_id = public.user.id";
+			//sql += "INNER JOIN user ON song.author_id = song.id";
+			System.out.println(sql);
+			ResultSet rs = st.executeQuery(sql);
+			System.out.println(rs);
+	        while(rs.next()) {
+	        	System.out.println(rs.getString("username"));
+	        	Song s = new Song(rs.getInt("id"), rs.getString("name"), rs.getInt("duration"), rs.getInt("author_id"));
+	        	songs.add(s);
+	        }
+	        st.close();
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+		return songs;
 	}
 	
 	public List<Song> getOrderById() {
