@@ -7,7 +7,9 @@ import java.util.Map;
 import com.google.gson.Gson;
 
 import dao.SongDAO;
+import dao.UserDAO;
 import model.Song;
+import model.User;
 import spark.Request;
 import spark.Response;
 
