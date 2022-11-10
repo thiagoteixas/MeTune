@@ -88,7 +88,7 @@ public class SongDAO extends DAO {
 			System.out.println(rs);
 	        while(rs.next()) {
 	        	System.out.println(rs.getString("username"));
-	        	Song s = new Song(rs.getInt("id"), rs.getString("name"), rs.getInt("duration"), rs.getInt("author_id"));
+	        	Song s = new Song(rs.getInt("id"), rs.getString("name"), rs.getInt("duration"), rs.getInt("author_id"), rs.getString("username"));
 	        	songs.add(s);
 	        }
 	        st.close();

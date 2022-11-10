@@ -10,6 +10,7 @@ public class Song {
 	private int duration;
 	private int author;
 	private List<String> tags;
+	private String username;
 	
 	public Song(int id, String name, int duration, int author) {
       this.id = id;
@@ -17,6 +18,15 @@ public class Song {
       this.duration = duration;
       this.author = author;
   }
+	
+	public Song(int id, String name, int duration, int author, String username) {
+	      this.id = id;
+	      this.name = name;
+	      this.duration = duration;
+	      this.author = author;
+	      this.username = username;
+	  }
+	
 	public Song(int id, String name, int duration) {
 		this.id = id;
 		this.name = name;
@@ -65,6 +75,10 @@ public class Song {
     	this.tags = list;
     }
 
+    public String getUsername() {
+        return username;
+    }
+  
 	@Override
 	public String toString() {
 		return "Song [id=" + id + ", name=" + name + ", duration=" + duration + " author_id="+ author + "]";
