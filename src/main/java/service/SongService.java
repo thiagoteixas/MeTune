@@ -38,28 +38,29 @@ public class SongService {
   public String insert(Request req, Response res) {
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header("Access-Control-Allow-Method", "POST");
-    String titulo = req.queryParams("titulo");
-    int duracao = Integer.parseInt(req.queryParams("duracao"));
+	Song song = new Gson().fromJson(req.body(), Song.class);
+	String aux = req.body().split(",")[1].split(":")[1].split("\"")[1];
+	song.setAuthor(Integer.parseInt(aux));
     int autor = -1;
     
     System.out.println("test");
     
     String resp = "";
-    Song song = new Song(titulo, duracao, autor);
+    /*Song song = new Song(titulo, duracao, autor);
     
     if (req.queryParams("Autor") != null) {
       autor = Integer.parseInt(req.queryParams("Autor"));
       song.setAuthor(autor);
-    }
+    }*/
       
     
     if (SongDAO.insert(song) == true) {
-      resp = "Música (" + titulo + ") inserida";
-      System.out.println("Música (" + titulo + ") inserida");
+      /*resp = "Música (" + titulo + ") inserida";
+      System.out.println("Música (" + titulo + ") inserida");*/
       res.status(201);
     } else {
-        resp = "Música (" + titulo + ") não inserido!";
-        System.out.println("Música (" + titulo + ") não inserido!");
+        /*resp = "Música (" + titulo + ") não inserido!";
+        System.out.println("Música (" + titulo + ") não inserido!");*/
         res.status(404); // 404 Not found
       }
 
