@@ -13,9 +13,9 @@ public class Test {
 	  public boolean insert(Request req, Response res) {
 		  boolean resp = true;
 		  
-//		  System.out.println(req.body());
+		  System.out.println(req.body());
 //		  System.out.println(req.body().toString());
-		  System.out.println(req.queryParams("titulo"));
+//		  System.out.println(req.queryParams("titulo"));
 		  
 		  return resp;
 	  }
