@@ -73,6 +73,7 @@ public class SongService {
    * @return retorna uma string em formato de Json para a pagina principal contendo a class em formato Json
    */
   public String get(Request req, Response res) {
+	res.type("aplication/json");
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header("Access-Control-Allow-Method", "GET");
     int id = Integer.parseInt(req.params(":id"));       
@@ -147,16 +148,21 @@ public class SongService {
    * @return retorna a class que foi atualizada com as novas informacoes
    */
   public Song update(Request req, Response res) {
+	res.type("aplication/json");
 	res.header("Access-Control-Allow-Origin", "*");
-	res.header("Access-Control-Allow-Method", "PUT");
+	res.header("Access-Control-Allow-Method", "POST");
+	System.out.println(req.body());
     int id = Integer.parseInt(req.params(":id"));
     Song song = SongDAO.get(id);
+    Song song2 = new Gson().fromJson(req.body(), Song.class);
 //    String resp = "";       
 
     if (song != null) {
 //        song.setAuthor(Integer.parseInt(req.queryParams("ID_Musica")));
-        song.setName(req.queryParams("titulo"));
-        song.setDuration(Integer.parseInt(req.queryParams("duracao")));
+    	System.out.println(""+ req.queryParams("titulo"));
+        song.setName(song2.getName());
+        song.setDuration(song2.getDuration());
+        song.setAuthor(song2.getAuthor());
         SongDAO.update(song);
         res.status(200); // success
 //        resp = "Musica (ID " + song.getId() + ") atualizado!";

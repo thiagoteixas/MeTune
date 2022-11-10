@@ -96,11 +96,12 @@ public class SongDAO extends DAO {
 			System.err.println(e.getMessage());
 		}
 		return songs;
-	}
+	}	
 	
 	public List<Song> getOrderById() {
 		return get("id");		
 	}
+	
 	
 	
 	public List<Song> getOrderByName() {
