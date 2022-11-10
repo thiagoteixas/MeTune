@@ -3,6 +3,8 @@ package dao;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import model.User;
 
@@ -31,14 +33,19 @@ public class UserDAO extends DAO {
 	 */
 	public boolean insert(User user) {
 		boolean status = false;
-		try {  
-			Statement st = conexao.createStatement();
-			String sql = "INSERT INTO public.user (email, username, password, premium) "
-				       + "VALUES ('"+ user.getEmail() + "', '"
-				       + user.getUsername() + "', '" 
-				       + user.getPassword() + "', '"
-				       + user.isPremium() + "');";
+		try {
+//			String sql = "INSERT INTO public.user (email, username, password, premium) "
+//				       + "VALUES ('"+ user.getEmail() + "', '"
+//				       + user.getUsername() + "', '" 
+//				       + user.getPassword() + "', '"
+//				       + user.isPremium() + "');";
+			String sql = "INSERT INTO public.user (email, username, password, premium) VALUES ( ?, ?, ?, ? )";
 			//System.out.println(sql);
+			PreparedStatement st = conexao.prepareStatement(sql);
+			st.setString(1, user.getEmail());
+			st.setString(2, user.getUsername());
+			st.setString(3, user.getPassword());
+			st.setBoolean(4, user.isPremium());
 			st.executeUpdate(sql);
 			st.close();
 			status = true;
@@ -58,9 +65,11 @@ public class UserDAO extends DAO {
 		User user = null;
 		
 		try {
-			Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-			String sql = "SELECT * FROM public.user WHERE id = " + id;
-			//System.out.println(sql);
+			String sql = "SELECT * FROM public.user WHERE id = ?";
+			PreparedStatement st = conexao.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+			// Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+			//String sql = "SELECT * FROM public.user WHERE id = " + id;
+			st.setInt(1, id);
 			ResultSet rs = st.executeQuery(sql);	
 	        if(rs.next()){            
 	        	user = new User(
@@ -86,15 +95,16 @@ public class UserDAO extends DAO {
 		System.out.println(name);
 		
 		try {
-			Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-			String sql = "SELECT * FROM public.user WHERE public.user.username = '" + name + "';";
+			String sql = "SELECT * FROM public.user WHERE public.user.username = ?";
+			PreparedStatement st = conexao.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
 			//System.out.println(sql);
+			st.setString(1, name);
 			ResultSet rs = st.executeQuery(sql);	
 	        if(rs.next()){            
 	        	user = new User(
 	        			rs.getInt("id"),
 	        			rs.getString("email"),
-	        			rs.getString("password"),
+	        			rs.getString("password"),	
 	        			rs.getString("username"), 
 	        			rs.getBoolean("premium"));
 	        }
