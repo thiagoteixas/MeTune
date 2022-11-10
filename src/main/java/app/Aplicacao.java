@@ -1,6 +1,6 @@
 package app;
 import static spark.Spark.*;
-import app.Cors;
+// import app.Cors;
 
 import service.*;
 import Utils.*;
@@ -31,7 +31,7 @@ public class Aplicacao {
 		// get("/profile/:id", (request, response) -> profile.get(request, response));
 		
 		
-		Cors.apply();
+		//Cors.apply();
 		
 	  // Song Crud routes
 	  post("/song", (request, response) -> SongService.insert(request, response));

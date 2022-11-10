@@ -8,6 +8,7 @@ import java.util.Map;
 import com.google.gson.Gson;
 
 import dao.UserDAO;
+import model.Song;
 import model.User;
 
 import spark.Request;
@@ -56,14 +57,16 @@ public class UserService {
   public User insert(Request req, Response res) {
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header("Access-Control-Allow-Method", "POST");
-    String email = req.queryParams("email");
-    String senha = req.queryParams("senha");
-    String nome = req.queryParams("nome");
     boolean tipo_cadastro = Boolean.parseBoolean(req.queryParams("cadastro"));
+    User user = new Gson().fromJson(req.body(), User.class);
+    
+    System.out.println(""+user);
+    user.setPassword(toMD5(user.getPassword()));
+    System.out.println(""+user);
     
 //    String resp = "";
      
-    User user = new User(email, toMD5(senha), nome, tipo_cadastro);
+    // User user = new User(email, toMD5(senha), nome, tipo_cadastro);
       
    
     if (UserDAO.insert(user) == true) {

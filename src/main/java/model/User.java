@@ -70,7 +70,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [email=" + email + ", username=" + username + ", isPremium=" + isPremium + "]";
+		return "User [email=" + email + ", username=" + username + ", isPremium=" + isPremium + ", password=" + password + "]";
 	}
 	
 	
