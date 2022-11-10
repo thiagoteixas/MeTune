@@ -46,7 +46,7 @@ public class UserDAO extends DAO {
 			st.setString(2, user.getUsername());
 			st.setString(3, user.getPassword());
 			st.setBoolean(4, user.isPremium());
-			st.executeUpdate(sql);
+			st.executeUpdate();
 			st.close();
 			status = true;
 		} catch (SQLException u) {  
@@ -70,7 +70,7 @@ public class UserDAO extends DAO {
 			// Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
 			//String sql = "SELECT * FROM public.user WHERE id = " + id;
 			st.setInt(1, id);
-			ResultSet rs = st.executeQuery(sql);	
+			ResultSet rs = st.executeQuery();	
 	        if(rs.next()){            
 	        	user = new User(
 	        			rs.getInt("id"), 
@@ -99,7 +99,7 @@ public class UserDAO extends DAO {
 			PreparedStatement st = conexao.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
 			//System.out.println(sql);
 			st.setString(1, name);
-			ResultSet rs = st.executeQuery(sql);	
+			ResultSet rs = st.executeQuery();	
 	        if(rs.next()){            
 	        	user = new User(
 	        			rs.getInt("id"),
