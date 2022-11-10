@@ -76,6 +76,36 @@ public class UserDAO extends DAO {
 		return user;
 	}
 	
+	/**
+	 * Retorna uma user de acordo com o id passado no parametro
+	 * @param id numero de id para ser resgastado a classe
+	 * @return a classe resgatada
+	 */
+	public User getWithPassword(String name) {
+		User user = null;
+		System.out.println(name);
+		
+		try {
+			Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+			String sql = "SELECT * FROM public.user WHERE public.user.username = '" + name + "';";
+			//System.out.println(sql);
+			ResultSet rs = st.executeQuery(sql);	
+	        if(rs.next()){            
+	        	user = new User(
+	        			rs.getInt("id"),
+	        			rs.getString("email"),
+	        			rs.getString("password"),
+	        			rs.getString("username"), 
+	        			rs.getBoolean("premium"));
+	        }
+	        st.close();
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+		return user;
+	}
+	
+	
 	
 	public List<User> get() {
 		return get("");

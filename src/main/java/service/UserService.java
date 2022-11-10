@@ -163,4 +163,33 @@ public class UserService {
     return status;
   }
   
+  public String validate(Request req, Response res) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Method", "GET");
+	
+	String username = req.params(":username");
+	String password = req.params(":password");
+    User user = (User) UserDAO.getWithPassword(username);
+    
+    if (user != null) {
+    	System.out.println(user.getPassword());
+    	System.out.println(user.getEmail());
+    	System.out.println(user.getId());
+    	if (user.getPassword().equals(password)) {
+    		Map<String, Object> preJson = new HashMap<>();
+		    preJson.put("id", user.getId());
+		    res.status(200);
+		    return new Gson().toJson(preJson);
+    	} else {
+    		res.status(403);
+    	}
+	    
+    } else {
+      res.status(404);
+    }
+    
+    return new Gson().toJson("{}");
+	
+  }
+  
 }

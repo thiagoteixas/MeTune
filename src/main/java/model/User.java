@@ -23,6 +23,14 @@ public class User {
 		this.username = username;
 		this.isPremium = isPremium;
 	}
+	
+	public User(int id, String email, String password, String username, boolean isPremium) {
+		this.id = id;
+		this.email = email;
+		this.password = password;
+		this.username = username;
+		this.isPremium = isPremium;
+	}
 
 	public int getId() {
 		return id;

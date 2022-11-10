@@ -54,6 +54,7 @@ public class Aplicacao {
       get("/user/:id", (request, response) -> UserService.get(request, response));
       put("/user/update/:id", (request, response) -> UserService.update(request, response));
       get("/user/delete/:id", (request, response) -> UserService.delete(request, response));
+      get("/user/validation/:username/:password", (request, response) -> UserService.validate(request, response));
       
       
       // Test routes
