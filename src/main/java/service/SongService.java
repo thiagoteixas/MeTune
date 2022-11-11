@@ -119,6 +119,7 @@ public class SongService {
 	  
 	  responseJson = "{\"musicas\":";
 	  responseJson = responseJson + new Gson().toJson(songs);
+	  responseJson = responseJson + ", \"rec\":"; 
 	  
 	  int id_user = -1;
 	  
@@ -133,15 +134,13 @@ public class SongService {
 			  System.out.println(id_user);
 			  System.out.println(aux);
 			  
-			  responseJson = responseJson + ", \"rec\":"; 
-			  
 			  if (aux != null) {
 				  responseJson = responseJson + aux;  
-			  } else {
-				  responseJson = responseJson + "{}";
 			  }
 			  
 		  }
+	  } else {
+		  responseJson = responseJson + "{}";
 	  }
 	  
 	  responseJson = responseJson + "}";
@@ -170,6 +169,11 @@ public class SongService {
 	    
 	    return null;
   }
+  
+  public Object favoritar(Request request, Response response) {
+		// TODO Auto-generated method stub
+		return null;
+	}
   
   /**
    * Dado uma URL atualizar um registro no banco de dados, pegando os dados atualizado da URL
