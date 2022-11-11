@@ -10,6 +10,7 @@ import dao.SongDAO;
 import dao.UserDAO;
 import model.Song;
 import model.User;
+import service.WebService;
 import spark.Request;
 import spark.Response;
 
@@ -109,17 +110,45 @@ public class SongService {
 	  res.type("aplication/json");
 	  res.header("Access-Control-Allow-Origin", "*");
 	  res.header("Access-Control-Allow-Method", "GET");
+	  String responseJson = "";
 	  
 	  List<Song> songs = (List <Song>) SongDAO.getAll();
 	  
-	  if(songs != null) {
-		 System.out.println(songs);
-		 res.status(200);
-		 return new Gson().toJson(songs);
-	  } else {
-		 res.status(404);
+	  if(songs == null)
+		  return "{\n\t\"Musica invalida\"\t}";
+	  
+	  responseJson = "{\"musicas\":";
+	  responseJson = responseJson + new Gson().toJson(songs);
+	  
+	  int id_user = -1;
+	  
+	  if (req.queryParams("user_id") != null) {
+		  WebService wb = new WebService();
+		  
+		  id_user = Integer.parseInt(req.queryParams("user_id"));
+		  
+		  if (id_user > 0) {
+//			  String aux = new Gson().toJson(SongDAO.get(id_user));
+			  String aux = wb.getRecomentation(id_user, 1);
+			  System.out.println(id_user);
+			  System.out.println(aux);
+			  
+			  responseJson = responseJson + ", \"rec\":"; 
+			  
+			  if (aux != null) {
+				  responseJson = responseJson + aux;  
+			  } else {
+				  responseJson = responseJson + "{}";
+			  }
+			  
+		  }
 	  }
-	  return "Erro";
+	  
+	  responseJson = responseJson + "}";
+	  
+	 System.out.println(responseJson);
+	 res.status(200);
+	 return responseJson;
   }
   
   public Song getByName(Request req, Response res) {

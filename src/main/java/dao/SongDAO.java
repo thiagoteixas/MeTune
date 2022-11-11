@@ -65,7 +65,7 @@ public class SongDAO extends DAO {
 			//System.out.println(sql);
 			ResultSet rs = st.executeQuery(sql);	
 	        if(rs.next()){            
-	        	song = new Song(rs.getInt("id"), rs.getString("name"), rs.getInt("duration"));
+	        	song = new Song(rs.getInt("id"), rs.getString("name"), rs.getInt("duration"), rs.getInt("author_id"));
 	        }
 	        st.close();
 		} catch (Exception e) {

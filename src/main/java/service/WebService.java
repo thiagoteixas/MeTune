@@ -2,6 +2,7 @@ package service;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.Arrays;
 
 import org.eclipse.jetty.client.HttpClient;
 import org.eclipse.jetty.client.api.ContentResponse;
@@ -13,19 +14,28 @@ import com.google.gson.Gson;
 
 import dao.SongDAO;
 import dao.UserDAO;
+import model.Song;
 
 public class WebService {
 	
 	private final String urlAcesso = "http://8a9b92a5-8e84-409e-afc2-d665805e70f4.eastus2.azurecontainer.io/score";
 	private final String KEY_LOCATION = "keys.txt";
-	private final boolean DEBUG_STATUS = true; 
+	private boolean DEBUG_STATUS = false; 
 	private String tokenAcesso;
 	public String bodyStart = "{\"Inputs\":{\"input1\": [{\"user_id\": \"";
 	public String bodyMiddle =  "\", \"song_id\": ";
 	public String bodyEnd = "}]}, \"GlobalParamenters\":{}}";
 	
 	public WebService() {
-		
+		start();
+	}
+	
+	public WebService(boolean debugStatus) {
+		DEBUG_STATUS = debugStatus;
+		start();
+	}
+	
+	private void start() {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(KEY_LOCATION));
 			
@@ -39,7 +49,7 @@ public class WebService {
 			br.close();
 			
 			if (DEBUG_STATUS)
-				System.out.println(tokenAcesso);
+				System.out.println("chave de acesso: " + tokenAcesso);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -67,7 +77,11 @@ public class WebService {
 					.method(HttpMethod.POST)
 					.content(new StringContentProvider(bodyStart + user_id + bodyMiddle + song_id + bodyEnd), "application/json")
 					.send();
-			System.out.println(response.getContentAsString());
+			
+			if (DEBUG_STATUS)
+				System.out.println("Resposta da requisicao: " + response.getContentAsString());
+			
+			
 			apt_request.stop();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -75,13 +89,20 @@ public class WebService {
 		
 		String[] aux = response.getContentAsString().split("\"");
 		String aa = aux[aux.length-2];
-//		System.out.println(Arrays.toString(aux));
-//		System.out.println(aa);
+		
+		if (DEBUG_STATUS) {				
+			System.out.println("Array de split: " + Arrays.toString(aux));
+			System.out.println("ID da musica: " + aa);
+		}
 		
 		res = Integer.parseInt(aa);
+		Song song = new SongDAO().get(res);
 		
+		if (song == null) {
+			return "{}";
+		}
 		
-		return new Gson().toJson(new SongDAO().get(res));
+		return new Gson().toJson(song);
 
 	}
 }
