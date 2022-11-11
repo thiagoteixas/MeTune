@@ -9,6 +9,11 @@ import org.eclipse.jetty.client.util.StringContentProvider;
 import org.eclipse.jetty.http.HttpHeader;
 import org.eclipse.jetty.http.HttpMethod;
 
+import com.google.gson.Gson;
+
+import dao.SongDAO;
+import dao.UserDAO;
+
 public class WebService {
 	
 	private final String urlAcesso = "http://8a9b92a5-8e84-409e-afc2-d665805e70f4.eastus2.azurecontainer.io/score";
@@ -41,7 +46,7 @@ public class WebService {
 		}
 	}
 	
-	public int getRecomentation(int user_id, int song_id) {
+	public String getRecomentation(int user_id, int song_id) {
 		
 		int res = -1;
 		
@@ -74,7 +79,9 @@ public class WebService {
 //		System.out.println(aa);
 		
 		res = Integer.parseInt(aa);
-		return res;
+		
+		
+		return new Gson().toJson(new SongDAO().get(res));
 
 	}
 }
