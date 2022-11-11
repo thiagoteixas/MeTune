@@ -35,13 +35,20 @@ public class SongDAO extends DAO {
 	public boolean insert(Song song) {
 		boolean status = false;
 		try {  
-			Statement st = conexao.createStatement();
-			String sql = "INSERT INTO song (name, duration, author_id) "
-				       + "VALUES ('"+ song.getName() + "', "  
-				       + song.getDuration() + ", "
-				       + song.getAuthor() + ");";
-			//System.out.println(sql);
-			st.executeUpdate(sql);
+//			Statement st = conexao.createStatement();
+//			String sql = "INSERT INTO song (name, duration, author_id) "
+//				       + "VALUES ('"+ song.getName() + "', "  
+//				       + song.getDuration() + ", "
+//				       + song.getAuthor() + ");";
+//			//System.out.println(sql);
+//			st.executeUpdate(sql);
+//			st.close();
+			String sql = "INSERT INTO song (name, duration, author_id) VALUES ( ?, ?, ? )";
+			PreparedStatement st = conexao.prepareStatement(sql);
+			st.setString(1, song.getName());
+			st.setInt(2, song.getDuration());
+			st.setInt(3, song.getAuthor());
+			st.executeUpdate();
 			st.close();
 			status = true;
 		} catch (SQLException u) {  
@@ -60,10 +67,14 @@ public class SongDAO extends DAO {
 		Song song = null;
 		
 		try {
-			Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-			String sql = "SELECT * FROM song WHERE id = " + id;
-			//System.out.println(sql);
-			ResultSet rs = st.executeQuery(sql);	
+//			Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+//			String sql = "SELECT * FROM song WHERE id = " + id;
+//			//System.out.println(sql);
+//			ResultSet rs = st.executeQuery(sql);	
+			String sql = "SELECT * FROM song WHERE id = ?";
+			PreparedStatement st = conexao.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+			st.setInt(1, id);
+			ResultSet rs = st.executeQuery();	
 	        if(rs.next()){            
 	        	song = new Song(rs.getInt("id"), rs.getString("name"), rs.getInt("duration"), rs.getInt("author_id"));
 	        }
@@ -146,10 +157,11 @@ public class SongDAO extends DAO {
 	public Song getByName(String name) {
 		Song song = null;
 		try {
-			Statement st = conexao.createStatement();
-			String sql = "SELECT song WHERE name = '" + name;
-			System.out.println(sql);
-			ResultSet rs = st.executeQuery(sql);	
+			String sql = "SELECT * FROM song WHERE name = ?";
+			PreparedStatement st = conexao.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+//			System.out.println(sql);
+			st.setString(1, name);
+			ResultSet rs = st.executeQuery();	
 			if(rs.next()){            
 	        	song = new Song(rs.getInt("id"), rs.getString("name"), rs.getInt("duration"));
 	        }

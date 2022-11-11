@@ -7,7 +7,9 @@ import java.util.Map;
 
 import com.google.gson.Gson;
 
+import dao.SongDAO;
 import dao.UserDAO;
+import model.Song;
 import model.User;
 import service.UserService;
 import spark.Request;
@@ -16,6 +18,7 @@ import spark.Response;
 public class Test {
 
 	public static UserDAO us = new UserDAO();
+	public static SongDAO songDAO = new SongDAO();
 	
 	  public static boolean insert(Request req, Response res) {
 		  boolean resp = true;
@@ -66,15 +69,46 @@ public class Test {
 	}
 	
 	public static void testUserDelete() {
-		
+//		:)	
 	}
+	
+	public static void testSongInsert() {
+		Song song = new Song(0, "mike", 120, 2);
+		System.out.println("song foi inserido: " + songDAO.insert(song));
+	}
+	
+	public static void testSongGet() {
+		Song song = songDAO.get(1);
+		
+		System.out.println("Song foi pego: " + song);
+	}
+	
+	public static void testSongGetAll() {
+		List<Song> allSong = songDAO.getAll();
+		
+		for (Song e : allSong) {
+			System.out.println("Testar totas musicas: " + e);
+		}
+	}
+	
+	public static void testSongGetName() {
+		Song song = songDAO.getByName("song1");
+		
+		System.out.println("Test get song by name: " + song);
+	}
+	
+	
 	
 	public static void main(String[] args) {
 		
-		sqlInjectUserPass();
-		TestUserpass();
-		TestUserget();
+//		sqlInjectUserPass();
+//		TestUserpass();
+//		TestUserget();
 //		testUserUpdate();
 		
+//		testSongInsert();
+//		testSongGet();
+//		testSongGetAll();
+		testSongGetName();
 	}
 }
