@@ -1,10 +1,7 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Logo from './img/logo.jpg';
@@ -14,14 +11,27 @@ import Figure from 'react-bootstrap/Figure';
 
 import { BsFillPersonFill, BsSearch, BsFillHeartFill } from "react-icons/bs";
 
+import {Link} from 'react-router-dom';
+
 import '../App.css';
 
 function Header () {
+
+    var logged_in;
+
+    console.log('local teste', localStorage.getItem("logged_user_id"));
+
+    if (localStorage.getItem("logged_user_id") != '0' ) {
+      logged_in = "/perfil"
+    } else {
+      logged_in = "/login"
+    }
+
     return (
         <Navbar bg="light" expand="lg">
           <Container fluid>
             <Navbar.Brand href="#">
-                <Figure className="logo-header">
+                <Link to="/"><Figure className="logo-header">
                 <Figure.Image
                     width={110}
                     height={100}
@@ -36,7 +46,7 @@ function Header () {
                     alt="171x180"
                     src={LogoMetune}
                 />
-                </Figure>
+                </Figure></Link>
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="navbarScroll" />
             <Navbar.Collapse id="navbarScroll">
@@ -45,9 +55,9 @@ function Header () {
                 style={{ maxHeight: '100px' }}
                 navbarScroll
               >
-              <BsFillHeartFill size={50} className="icon-header" color="red" />
-              <BsSearch size={50} className="icon-header" color="white" />
-              <BsFillPersonFill size={60} className="icon-header" color="white" />
+              {/*<BsFillHeartFill size={50} className="icon-header" color="red" />
+               <BsSearch size={50} className="icon-header" color="white" />*/ }
+              <Link to={logged_in}><BsFillPersonFill size={60} className="icon-header" color="white" /></Link>
               </Nav>
             </Navbar.Collapse>
           </Container>

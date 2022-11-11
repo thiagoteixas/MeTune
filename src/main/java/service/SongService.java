@@ -1,12 +1,16 @@
 package service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.google.gson.Gson;
 
 import dao.SongDAO;
+import dao.UserDAO;
 import model.Song;
+import model.User;
+import service.WebService;
 import spark.Request;
 import spark.Response;
 
@@ -33,29 +37,36 @@ public class SongService {
    * @return string que indica se a classe foi inserida ou nao no banco de dados
    */
   public String insert(Request req, Response res) {
-//    int id = Integer.parseInt(req.queryParams("ID_musica"));
-    String titulo = req.queryParams("titulo");
-    int duracao = Integer.parseInt(req.queryParams("duracao"));
-    int autor = 1;
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Method", "POST");
+	Song song = new Gson().fromJson(req.body(), Song.class);
+//	String aux = req.body().split(",")[1].split(":")[1].split("\"")[1];
+	
+//	System.out.println(aux);
+//	System.out.println(req.body());
+	System.out.println(song);
+	
+//	song.setAuthor(Integer.parseInt(aux));
+    int autor = -1;
     
     System.out.println("test");
     
     String resp = "";
-    Song song = new Song(titulo, duracao, autor);
+    /*Song song = new Song(titulo, duracao, autor);
     
     if (req.queryParams("Autor") != null) {
       autor = Integer.parseInt(req.queryParams("Autor"));
       song.setAuthor(autor);
-    }
+    }*/
       
     
     if (SongDAO.insert(song) == true) {
-      resp = "Música (" + titulo + ") inserida";
-      System.out.println("Música (" + titulo + ") inserida");
+      /*resp = "Música (" + titulo + ") inserida";
+      System.out.println("Música (" + titulo + ") inserida");*/
       res.status(201);
     } else {
-        resp = "Produto (" + titulo + ") não inserido!";
-        System.out.println("Produto (" + titulo + ") não inserido!");
+        /*resp = "Música (" + titulo + ") não inserido!";
+        System.out.println("Música (" + titulo + ") não inserido!");*/
         res.status(404); // 404 Not found
       }
 
@@ -69,6 +80,9 @@ public class SongService {
    * @return retorna uma string em formato de Json para a pagina principal contendo a class em formato Json
    */
   public String get(Request req, Response res) {
+	res.type("aplication/json");
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Method", "GET");
     int id = Integer.parseInt(req.params(":id"));       
     Song song = (Song) SongDAO.get(id);
     
@@ -97,7 +111,54 @@ public class SongService {
     return new Gson().toJson("{}");
   }
   
+  public String getAll(Request req, Response res) {
+	  res.type("aplication/json");
+	  res.header("Access-Control-Allow-Origin", "*");
+	  res.header("Access-Control-Allow-Method", "GET");
+	  String responseJson = "";
+	  
+	  List<Song> songs = (List <Song>) SongDAO.getAll();
+	  
+	  if(songs == null)
+		  return "{\n\t\"Musica invalida\"\t}";
+	  
+	  responseJson = "{\"musicas\":";
+	  responseJson = responseJson + new Gson().toJson(songs);
+	  responseJson = responseJson + ", \"rec\":"; 
+	  
+	  int id_user = -1;
+	  
+	  if (req.queryParams("user_id") != null) {
+		  WebService wb = new WebService();
+		  
+		  id_user = Integer.parseInt(req.queryParams("user_id"));
+		  
+		  if (id_user > 0) {
+//			  String aux = new Gson().toJson(SongDAO.get(id_user));
+			  String aux = wb.getRecomentation(id_user, 1);
+			  System.out.println(id_user);
+			  System.out.println(aux);
+			  
+			  if (aux != null) {
+				  responseJson = responseJson + aux;  
+			  }
+			  
+		  }
+	  } else {
+		  responseJson = responseJson + "{}";
+	  }
+	  
+	  responseJson = responseJson + "}";
+	  
+	 System.out.println(responseJson);
+	 res.status(200);
+	 return responseJson;
+  }
+  
   public Song getByName(Request req, Response res) {
+	 res.type("aplication/json");
+	 res.header("Access-Control-Allow-Origin", "*");
+	 res.header("Access-Control-Allow-Method", "GET");
 	 String name = req.queryParams("titulo");
 	 Song song = SongDAO.getByName(name);
 	 
@@ -114,6 +175,11 @@ public class SongService {
 	    return null;
   }
   
+  public Object favoritar(Request request, Response response) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+  
   /**
    * Dado uma URL atualizar um registro no banco de dados, pegando os dados atualizado da URL
    * @param req requisicao para pedir dados
@@ -121,14 +187,21 @@ public class SongService {
    * @return retorna a class que foi atualizada com as novas informacoes
    */
   public Song update(Request req, Response res) {
+	res.type("aplication/json");
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Method", "POST");
+//	System.out.println(req.body());
     int id = Integer.parseInt(req.params(":id"));
     Song song = SongDAO.get(id);
+    Song song2 = new Gson().fromJson(req.body(), Song.class);
 //    String resp = "";       
 
     if (song != null) {
 //        song.setAuthor(Integer.parseInt(req.queryParams("ID_Musica")));
-        song.setName(req.queryParams("titulo"));
-        song.setDuration(Integer.parseInt(req.queryParams("duracao")));
+    	System.out.println(""+ req.queryParams("titulo"));
+        song.setName(song2.getName());
+        song.setDuration(song2.getDuration());
+        song.setAuthor(song2.getAuthor());
         SongDAO.update(song);
         res.status(200); // success
 //        resp = "Musica (ID " + song.getId() + ") atualizado!";
@@ -147,6 +220,8 @@ public class SongService {
    * @return boolean confirmando a deletacao do registro do banco de dados
    */
   public boolean delete(Request req, Response res) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Method", "GET");
     int id = Integer.parseInt(req.params(":id"));
     Song song = SongDAO.get(id);
 //    String resp = "";

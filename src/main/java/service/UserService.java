@@ -8,6 +8,7 @@ import java.util.Map;
 import com.google.gson.Gson;
 
 import dao.UserDAO;
+import model.Song;
 import model.User;
 
 import spark.Request;
@@ -53,16 +54,23 @@ public class UserService {
    * @param res resposta que o metodo vai mandar para a pagina, esse uma string
    * @return nova class que acabou de ser criada com resposta
    */
-  public User insert(Request req, Response res) {
-//    int id = Integer.parseInt(req.queryParams("ID_usuario"));
-    String email = req.queryParams("email");
-    String senha = req.queryParams("senha");
-    String nome = req.queryParams("nome");
-    boolean tipo_cadastro = Boolean.parseBoolean(req.queryParams("cadastro"));
+  public String insert(Request req, Response res) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Method", "POST");
+	res.type("aplication/json");
+    User user = new Gson().fromJson(req.body(), User.class);
+    
+    if (user == null) {
+    	return new String("{\n\t\"Usario invalido\"\n}");
+    }
+    
+    System.out.println(""+user);
+    user.setPassword(toMD5(user.getPassword()));
+    System.out.println(""+user);
     
 //    String resp = "";
      
-    User user = new User(email, toMD5(senha), nome, tipo_cadastro);
+    // User user = new User(email, toMD5(senha), nome, tipo_cadastro);
       
    
     if (UserDAO.insert(user) == true) {
@@ -74,7 +82,7 @@ public class UserService {
       }
 
     
-    return user;
+    return new String("{\n\t\"Usario inserio com sucesso\"\n}");
   }
   
   /**
@@ -84,6 +92,9 @@ public class UserService {
    * @return a classe na sua formatacao como toString, apresentado os atributos dela
    */
   public String get(Request req, Response res) {
+	res.type("aplication/json");
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Method", "GET");
     int id = Integer.parseInt(req.params(":id"));       
     User user = (User) UserDAO.get(id);
     
@@ -93,7 +104,6 @@ public class UserService {
 	    preJson.put("id", id);
 	    preJson.put("username", user.getUsername());
 	    preJson.put("email", user.getEmail());
-	    res.type("aplication/json");
 	    res.status(200);
 	    
 	    return new Gson().toJson(preJson);
@@ -111,6 +121,8 @@ public class UserService {
    * @return retorna a class que foi atualizada com as novas informacoes
    */
   public User update(Request req, Response res) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Method", "PUT");
     int id = Integer.parseInt(req.params(":id"));
     User user = UserDAO.get(id);
 //    String resp = "";       
@@ -138,6 +150,8 @@ public class UserService {
    * @return boolean confirmando a deletacao do registro do banco de dados
    */
   public boolean delete(Request req, Response res) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Method", "GET");
     int id = Integer.parseInt(req.params(":id"));
     User user = UserDAO.get(id);
 //    String resp = "";
@@ -151,6 +165,35 @@ public class UserService {
     }
     
     return status;
+  }
+  
+  public String validate(Request req, Response res) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Method", "GET");
+	
+	String username = req.params(":username");
+	String password = toMD5(req.params(":password"));
+    User user = (User) UserDAO.getWithPassword(username);
+    
+    if (user != null) {
+    	System.out.println(user.getPassword());
+    	System.out.println(user.getEmail());
+    	System.out.println(user.getId());
+    	if (user.getPassword().equals(password)) {
+    		Map<String, Object> preJson = new HashMap<>();
+		    preJson.put("id", user.getId());
+		    res.status(200);
+		    return new Gson().toJson(preJson);
+    	} else {
+    		res.status(403);
+    	}
+	    
+    } else {
+      res.status(404);
+    }
+    
+    return new Gson().toJson(null);
+	
   }
   
 }

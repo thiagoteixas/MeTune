@@ -3,6 +3,8 @@ package dao;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import model.User;
 
@@ -31,15 +33,20 @@ public class UserDAO extends DAO {
 	 */
 	public boolean insert(User user) {
 		boolean status = false;
-		try {  
-			Statement st = conexao.createStatement();
-			String sql = "INSERT INTO public.user (email, username, password, premium) "
-				       + "VALUES ('"+ user.getEmail() + "', '"
-				       + user.getUsername() + "', '" 
-				       + user.getPassword() + "', '"
-				       + user.isPremium() + "');";
+		try {
+//			String sql = "INSERT INTO public.user (email, username, password, premium) "
+//				       + "VALUES ('"+ user.getEmail() + "', '"
+//				       + user.getUsername() + "', '" 
+//				       + user.getPassword() + "', '"
+//				       + user.isPremium() + "');";
+			String sql = "INSERT INTO public.user (email, username, password, premium) VALUES ( ?, ?, ?, ? )";
 			//System.out.println(sql);
-			st.executeUpdate(sql);
+			PreparedStatement st = conexao.prepareStatement(sql);
+			st.setString(1, user.getEmail());
+			st.setString(2, user.getUsername());
+			st.setString(3, user.getPassword());
+			st.setBoolean(4, user.isPremium());
+			st.executeUpdate();
 			st.close();
 			status = true;
 		} catch (SQLException u) {  
@@ -58,10 +65,12 @@ public class UserDAO extends DAO {
 		User user = null;
 		
 		try {
-			Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-			String sql = "SELECT * FROM public.user WHERE id = " + id;
-			//System.out.println(sql);
-			ResultSet rs = st.executeQuery(sql);	
+			String sql = "SELECT * FROM public.user WHERE id = ?";
+			PreparedStatement st = conexao.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+			// Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+			//String sql = "SELECT * FROM public.user WHERE id = " + id;
+			st.setInt(1, id);
+			ResultSet rs = st.executeQuery();	
 	        if(rs.next()){            
 	        	user = new User(
 	        			rs.getInt("id"), 
@@ -75,6 +84,37 @@ public class UserDAO extends DAO {
 		}
 		return user;
 	}
+	
+	/**
+	 * Retorna uma user de acordo com o id passado no parametro
+	 * @param id numero de id para ser resgastado a classe
+	 * @return a classe resgatada
+	 */
+	public User getWithPassword(String name) {
+		User user = null;
+		System.out.println(name);
+		
+		try {
+			String sql = "SELECT * FROM public.user WHERE public.user.username = ?";
+			PreparedStatement st = conexao.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+			st.setString(1, name);
+			System.out.println(sql);
+			ResultSet rs = st.executeQuery();	
+	        if(rs.next()){            
+	        	user = new User(
+	        			rs.getInt("id"),
+	        			rs.getString("email"),
+	        			rs.getString("password"),	
+	        			rs.getString("username"), 
+	        			rs.getBoolean("premium"));
+	        }
+	        st.close();
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+		return user;
+	}
+	
 	
 	
 	public List<User> get() {
@@ -108,10 +148,23 @@ public class UserDAO extends DAO {
 		List<User> users = new ArrayList<User>();
 		
 		try {
-			Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-			String sql = "SELECT * FROM user" + ((orderBy.trim().length() == 0) ? "" : (" ORDER BY " + orderBy));
+//			Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+//			String sql = "SELECT * FROM user" + ((orderBy.trim().length() == 0) ? "" : (" ORDER BY " + orderBy));
 			//System.out.println(sql);
-			ResultSet rs = st.executeQuery(sql);	           
+//			ResultSet rs = st.executeQuery(sql);	
+			String sql = "SELECT * FROM public.user"; 
+			PreparedStatement st = conexao.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+
+//			st.setString(1, "");
+//			st.setString(1, ((orderBy.trim().length() == 0) ? "" : (" ORDER BY " + orderBy)));
+			
+//			if (orderBy.trim().length() == 0) {
+//				st.setString(1, "");
+//			} else {
+//				st.setString(1, " ORDER BY " + orderBy);
+//			}
+			
+			ResultSet rs = st.executeQuery();
 	        while(rs.next()) {	            	
 	        	User u = new User(
 	        			rs.getInt("id"), 
@@ -135,13 +188,20 @@ public class UserDAO extends DAO {
 	public boolean update(User user) {
 		boolean status = false;
 		try {  
-			Statement st = conexao.createStatement();
-			String sql = "UPDATE public.user SET email = '" + user.getEmail() 
-						+ "', username = '" + user.getUsername()
-						+ "', premium = '" + user.isPremium()
-						+ "' WHERE id = " + user.getId();
+//			Statement st = conexao.createStatement();
+//			String sql = "UPDATE public.user SET email = '" + user.getEmail() 
+//						+ "', username = '" + user.getUsername()
+//						+ "', premium = '" + user.isPremium()
+//						+ "' WHERE id = " + user.getId();
+			String sql = "UPDATE public.user SET email = ?, username = ?, premium = ? WHERE id = ?";
+			PreparedStatement st = conexao.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+			st.setString(1, user.getEmail());
+			st.setString(2, user.getUsername());
+			st.setBoolean(3, user.isPremium());
+			st.setInt(4, user.getId());
+
 			System.out.println(sql);
-			st.executeUpdate(sql);
+			st.executeUpdate();
 			st.close();
 			status = true;
 		} catch (SQLException u) {  
@@ -158,10 +218,11 @@ public class UserDAO extends DAO {
 	public boolean delete(int id) {
 		boolean status = false;
 		try {  
-			Statement st = conexao.createStatement();
-			String sql = "DELETE FROM public.user WHERE id = " + id;
+			String sql = "DELETE FROM public.user WHERE id = ?";
+            PreparedStatement st = conexao.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
 			//System.out.println(sql);
-			st.executeUpdate(sql);
+            st.setInt(1, id);
+			st.executeUpdate();
 			st.close();
 			status = true;
 		} catch (SQLException u) {  
