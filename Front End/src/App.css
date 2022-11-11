@@ -2,6 +2,14 @@
 
 /* Inicio CSS header -----------------------------------*/ 
 
+.body-container {
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+}
+
 .logo-header, .logo-metune-header {
 
   margin: -0.5rem 0px -0.3rem;
@@ -52,5 +60,173 @@
 
 }
 
+.main-content {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.listBox {
+  display: inline-block;
+  height: 400px;
+  margin: 15px 20px;
+  padding: 0px 20px;
+}
+
+.listBox h3 {
+  width: 100%;
+  text-align: center;
+}
+
+.sobrenos-text {
+  color: white;
+  margin-top: 15px;
+}
+
+.login{
+  width: 600px;
+  padding: 30px;
+  border:1px solid #5c5e61;
+  margin: 50px auto;
+}
+.login p{
+  width: 100%;
+  font-size: 1.5em;
+}
+.field{
+  width: 100%;
+  margin: 15px 0;
+}
+.field label, 
+.field span{
+  padding-left: 10px;
+  font-size: 1.1em;
+  display: block;
+  width: 100%;
+}
+.radiobox label{
+  width: auto;
+  display: inline-block;
+}
+input[type=password],
+input[type=email],
+input[type=text],
+textarea{
+  width: 100%;
+  padding-left: 10px;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 15px;
+  border: 1px solid #5c5e61;
+  outline: none;
+}
+input#nao{
+  margin-left: 30px;
+}
+textarea{
+  line-height: 20px;
+  padding: 10px;
+  height: 90px;
+  resize: none;
+}
+input[type=submit]{
+  display: block;
+  background-color: #5c5e61;
+  height: 35px;
+  border: none;
+  outline: 0;
+  cursor: pointer;
+  width: 100px;
+  margin: 0 auto;
+  text-align: center;
+  border-radius: 15px;
+}
+
+.login-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.error-message {
+  color: red;
+  font-weight: bold;
+}
+
+.container-profile {
+  background-color: #f1f1f1; 	
+  padding: 15px;
+  text-align: center;	
+  width: 605px;		
+}
+
+h1 {
+  color: #09101a;
+  margin: 10px;
+}
+
+h2 {
+  color: #09101a;
+  font-size: 14px;
+}
+
+.about h1 {
+font-size: 16px;
+}
+
+.about p {
+  color: #A5A5A5;
+  font-weight: 400;
+}
+
+.about {
+  padding: 30px;
+  margin: 30px;
+  background-color: #fff; 
+  border-radius: 0%;
+  text-align: center;
+}
+
+img.foto {
+  width:150px;
+  border-radius: 10%;
+  filter: grayscale(1);
+  transition: 0.5s all;
+  cursor: pointer;
+  border-radius: 50%;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  margin: 10px;
+}
+
+img.ico {
+  width:20px;			
+  filter: grayscale(1);
+  transition: 0.5s all;
+  cursor: pointer;
+  border-radius: 50%;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  
+}
+
+img:hover {				
+  filter: grayscale(0);
+  cursor: pointer;
+  border-radius: 0%;
+  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.0);
+}
+
+.negrito {
+  font-weight: 700;
+}
+
+.profile-box {
+  display: flex;
+  width: 100% !important;
+}
+
+.container-div-musicas {
+  width: 100% !important;
+}
 
 /* Fim CSS header -----------------------------------*/ 

@@ -173,7 +173,7 @@ public class UserService {
 	res.header("Access-Control-Allow-Method", "GET");
 	
 	String username = req.params(":username");
-	String password = req.params(":password");
+	String password = toMD5(req.params(":password"));
     User user = (User) UserDAO.getWithPassword(username);
     
     if (user != null) {
@@ -193,7 +193,7 @@ public class UserService {
       res.status(404);
     }
     
-    return new Gson().toJson("{}");
+    return new Gson().toJson(null);
 	
   }
   
