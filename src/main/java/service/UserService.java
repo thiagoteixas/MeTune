@@ -54,11 +54,16 @@ public class UserService {
    * @param res resposta que o metodo vai mandar para a pagina, esse uma string
    * @return nova class que acabou de ser criada com resposta
    */
-  public User insert(Request req, Response res) {
+  public String insert(Request req, Response res) {
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header("Access-Control-Allow-Method", "POST");
-    boolean tipo_cadastro = Boolean.parseBoolean(req.queryParams("cadastro"));
+//    boolean tipo_cadastro = Boolean.parseBoolean(req.queryParams("cadastro"));
+	res.type("aplication/json");
     User user = new Gson().fromJson(req.body(), User.class);
+    
+    if (user == null) {
+    	return new String("{\n\t\"Usario invalido\"\n}");
+    }
     
     System.out.println(""+user);
     user.setPassword(toMD5(user.getPassword()));
@@ -78,7 +83,7 @@ public class UserService {
       }
 
     
-    return user;
+    return new String("{\n\t\"Usario inserio com sucesso\"\n}");
   }
   
   /**

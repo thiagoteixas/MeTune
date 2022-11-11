@@ -18,18 +18,7 @@ public class Aplicacao {
 	public static void main(String[] args) {
 		
 		//port(****);
-	  
-      /*  post("/post", (request, response) -> {
-    	   	response.type("aplication/json");
-    	   	Map<String, Object> map = new HashMap<>();
-       		map.put("test", "METUNE");
-//       		System.out.println(map);
-       		return new Gson().toJson(map);
-//       		return map;
-       });*/
-		
 		// get("/profile/:id", (request, response) -> profile.get(request, response));
-		
 		
 		//Cors.apply();
 		
