@@ -152,14 +152,17 @@ public class UserDAO extends DAO {
 //			String sql = "SELECT * FROM user" + ((orderBy.trim().length() == 0) ? "" : (" ORDER BY " + orderBy));
 			//System.out.println(sql);
 //			ResultSet rs = st.executeQuery(sql);	
-			String sql = "SELECT * FROM user ?"; 
+			String sql = "SELECT * FROM public.user"; 
 			PreparedStatement st = conexao.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+
+//			st.setString(1, "");
+//			st.setString(1, ((orderBy.trim().length() == 0) ? "" : (" ORDER BY " + orderBy)));
 			
-			if (orderBy.trim().length() == 0) {
-				st.setString(1, "");
-			} else {
-				st.setString(1, " ORDER BY " + orderBy);
-			}
+//			if (orderBy.trim().length() == 0) {
+//				st.setString(1, "");
+//			} else {
+//				st.setString(1, " ORDER BY " + orderBy);
+//			}
 			
 			ResultSet rs = st.executeQuery();
 	        while(rs.next()) {	            	
