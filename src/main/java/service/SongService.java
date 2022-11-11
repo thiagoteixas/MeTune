@@ -40,8 +40,13 @@ public class SongService {
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header("Access-Control-Allow-Method", "POST");
 	Song song = new Gson().fromJson(req.body(), Song.class);
-	String aux = req.body().split(",")[1].split(":")[1].split("\"")[1];
-	song.setAuthor(Integer.parseInt(aux));
+//	String aux = req.body().split(",")[1].split(":")[1].split("\"")[1];
+	
+//	System.out.println(aux);
+//	System.out.println(req.body());
+	System.out.println(song);
+	
+//	song.setAuthor(Integer.parseInt(aux));
     int autor = -1;
     
     System.out.println("test");
@@ -185,7 +190,7 @@ public class SongService {
 	res.type("aplication/json");
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header("Access-Control-Allow-Method", "POST");
-	System.out.println(req.body());
+//	System.out.println(req.body());
     int id = Integer.parseInt(req.params(":id"));
     Song song = SongDAO.get(id);
     Song song2 = new Gson().fromJson(req.body(), Song.class);

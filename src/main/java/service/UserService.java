@@ -57,7 +57,6 @@ public class UserService {
   public String insert(Request req, Response res) {
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header("Access-Control-Allow-Method", "POST");
-//    boolean tipo_cadastro = Boolean.parseBoolean(req.queryParams("cadastro"));
 	res.type("aplication/json");
     User user = new Gson().fromJson(req.body(), User.class);
     

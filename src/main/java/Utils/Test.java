@@ -48,7 +48,7 @@ public class Test {
 	
 	public static void TestUserpass() {
 			
-		User user = us.getWithPassword("name1");
+		User user = us.getWithPassword("Pedro Silva");
 		System.out.println("test get user with password:" + user);
 	}
 	
@@ -101,14 +101,14 @@ public class Test {
 	
 	public static void main(String[] args) {
 		
-//		sqlInjectUserPass();
-//		TestUserpass();
+		sqlInjectUserPass();
+		TestUserpass();
 //		TestUserget();
 //		testUserUpdate();
 		
 //		testSongInsert();
 //		testSongGet();
 //		testSongGetAll();
-		testSongGetName();
+//		testSongGetName();
 	}
 }

@@ -97,8 +97,8 @@ public class UserDAO extends DAO {
 		try {
 			String sql = "SELECT * FROM public.user WHERE public.user.username = ?";
 			PreparedStatement st = conexao.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-			//System.out.println(sql);
 			st.setString(1, name);
+			System.out.println(sql);
 			ResultSet rs = st.executeQuery();	
 	        if(rs.next()){            
 	        	user = new User(

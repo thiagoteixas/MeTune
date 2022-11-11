@@ -18,7 +18,7 @@ public class Aplicacao {
 	public static void main(String[] args) {
 		
 		//port(****);
-		// get("/profile/:id", (request, response) -> profile.get(request, response));
+		 get("/profile/:id", (request, response) -> profile.get(request, response));
 		
 		//Cors.apply();
 		
