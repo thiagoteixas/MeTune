@@ -13,8 +13,8 @@ import SobreNos from '../Components/SobreNos';
 // import MusicBox from '.src/Components/MusicBox.js';
 import MusicPlayer from '../Components/MusicPlayer.js';
 import MusicList from '../Components/MusicList.js';
-import {Player} from './../Components/Player.js';
 
+//import { Player } from '../Components/player/player';
 
 function Home()  {
     return (<div>
