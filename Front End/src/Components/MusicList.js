@@ -18,6 +18,8 @@ class MusicList extends React.Component {
 
     constructor(props) {
 
+        var n = 0;
+
         super(props);
 
         this.state = {
@@ -27,11 +29,11 @@ class MusicList extends React.Component {
     }
 
     componentDidMount () {
-        fetch('http://localhost:4567/song')
+        fetch('http://localhost:4567/home')
           .then(result => result.json())
           .then(dados => {
             console.log(dados);
-            this.setState({songs : dados});
+            this.setState({songs : dados.musicas});
         });
     }
 
@@ -41,16 +43,15 @@ class MusicList extends React.Component {
 
     render () {
         return (
-            <div>
+            <div>                
+                <h3>{this.props.title}</h3>
                 <MusicLists>
                     <div className="listaMusicas" id="list">                        
                     {this.state.songs.map((song) => 
                         {
                             if (this.props.user == null) {
                                 return <MusicBox name={song.name} author={song.author} duration={song.duration} tipo={this.props.tipo} userid={this.props.id}></MusicBox>                      
-                            } else if (this.props.user != '' && this.props.user == song.author) {
-                                return <MusicBox name={song.name} author={song.author} duration={song.duration} tipo={this.props.tipo} userid={this.props.id}></MusicBox>
-                            }
+                            } 
                         }
                     )}
                     </div>
