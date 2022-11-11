@@ -13,6 +13,7 @@ import SobreNos from '../Components/SobreNos';
 // import MusicBox from '.src/Components/MusicBox.js';
 import MusicPlayer from '../Components/MusicPlayer.js';
 import MusicList from '../Components/MusicList.js';
+import { Player } from '../Components/player/player';
 
 function Home()  {
     return (<div>
@@ -33,6 +34,7 @@ function Home()  {
                 <MusicList user={parseInt(localStorage.getItem("logged_user_id"), 10)}></MusicList>
             </div>
         </div>
+        <Player/>
     </div>);
 }
 
