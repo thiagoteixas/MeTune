@@ -95,7 +95,8 @@ public class WebService {
 			System.out.println("ID da musica: " + aa);
 		}
 		
-		res = Integer.parseInt(aa);
+//		res = Integer.parseInt(aa);
+		res = Integer.parseInt(aa) % 10;
 		Song song = new SongDAO().get(res);
 		
 		if (song == null) {
