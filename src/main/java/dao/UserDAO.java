@@ -148,10 +148,23 @@ public class UserDAO extends DAO {
 		List<User> users = new ArrayList<User>();
 		
 		try {
-			Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-			String sql = "SELECT * FROM user" + ((orderBy.trim().length() == 0) ? "" : (" ORDER BY " + orderBy));
+//			Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+//			String sql = "SELECT * FROM user" + ((orderBy.trim().length() == 0) ? "" : (" ORDER BY " + orderBy));
 			//System.out.println(sql);
-			ResultSet rs = st.executeQuery(sql);	           
+//			ResultSet rs = st.executeQuery(sql);	
+			String sql = "SELECT * FROM public.user"; 
+			PreparedStatement st = conexao.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+
+//			st.setString(1, "");
+//			st.setString(1, ((orderBy.trim().length() == 0) ? "" : (" ORDER BY " + orderBy)));
+			
+//			if (orderBy.trim().length() == 0) {
+//				st.setString(1, "");
+//			} else {
+//				st.setString(1, " ORDER BY " + orderBy);
+//			}
+			
+			ResultSet rs = st.executeQuery();
 	        while(rs.next()) {	            	
 	        	User u = new User(
 	        			rs.getInt("id"), 
@@ -175,13 +188,20 @@ public class UserDAO extends DAO {
 	public boolean update(User user) {
 		boolean status = false;
 		try {  
-			Statement st = conexao.createStatement();
-			String sql = "UPDATE public.user SET email = '" + user.getEmail() 
-						+ "', username = '" + user.getUsername()
-						+ "', premium = '" + user.isPremium()
-						+ "' WHERE id = " + user.getId();
+//			Statement st = conexao.createStatement();
+//			String sql = "UPDATE public.user SET email = '" + user.getEmail() 
+//						+ "', username = '" + user.getUsername()
+//						+ "', premium = '" + user.isPremium()
+//						+ "' WHERE id = " + user.getId();
+			String sql = "UPDATE public.user SET email = ?, username = ?, premium = ? WHERE id = ?";
+			PreparedStatement st = conexao.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+			st.setString(1, user.getEmail());
+			st.setString(2, user.getUsername());
+			st.setBoolean(3, user.isPremium());
+			st.setInt(4, user.getId());
+
 			System.out.println(sql);
-			st.executeUpdate(sql);
+			st.executeUpdate();
 			st.close();
 			status = true;
 		} catch (SQLException u) {  
@@ -198,10 +218,11 @@ public class UserDAO extends DAO {
 	public boolean delete(int id) {
 		boolean status = false;
 		try {  
-			Statement st = conexao.createStatement();
-			String sql = "DELETE FROM public.user WHERE id = " + id;
+			String sql = "DELETE FROM public.user WHERE id = ?";
+            PreparedStatement st = conexao.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
 			//System.out.println(sql);
-			st.executeUpdate(sql);
+            st.setInt(1, id);
+			st.executeUpdate();
 			st.close();
 			status = true;
 		} catch (SQLException u) {  

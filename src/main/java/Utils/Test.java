@@ -1,6 +1,7 @@
 package Utils;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -14,6 +15,8 @@ import spark.Response;
 
 public class Test {
 
+	public static UserDAO us = new UserDAO();
+	
 	  public static boolean insert(Request req, Response res) {
 		  boolean resp = true;
 		  
@@ -37,20 +40,41 @@ public class Test {
 		UserDAO us = new UserDAO();
 		
 		User user = us.getWithPassword("X' OR 'X' LIKE 'X");
-		System.out.println(user);
+		System.out.println("Test sql injection: " + user);
 	}
 	
 	public static void TestUserpass() {
-		
-		UserDAO us = new UserDAO();
-		
+			
 		User user = us.getWithPassword("name1");
-		System.out.println(user);
+		System.out.println("test get user with password:" + user);
+	}
+	
+	public static void TestUserget() {
+		
+		List<User> user = us.get();
+		for (User us : user) {
+			System.out.println("Test get all: " + us);
+		}
+	}
+	
+	public static void testUserUpdate() {
+		User u = new User(1, "dev@dev.com", "mikeeeeee", false);
+		
+		if (us.update(u)) {
+			System.out.println("update ok");
+		}
+	}
+	
+	public static void testUserDelete() {
+		
 	}
 	
 	public static void main(String[] args) {
 		
 		sqlInjectUserPass();
 		TestUserpass();
+		TestUserget();
+//		testUserUpdate();
+		
 	}
 }
