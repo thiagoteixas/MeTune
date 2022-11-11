@@ -27,10 +27,10 @@ class Listamusicas extends React.Component {
 
     componentDidMount() {        
         
-        fetch("http://localhost:4567/song")
+        fetch("http://localhost:4567/home")
         .then(result => result.json())
         .then(dados => {
-            this.setState({musicas : dados});
+            this.setState({musicas : dados.musicas});
         });
         
     }
@@ -55,7 +55,7 @@ class Listamusicas extends React.Component {
             duration : duracao.value
         }
 
-        const request = await fetch('http://localhost:4567/song', {
+        const request = await fetch('http://localhost:4567/home', {
             method: 'POST',
             mode: 'no-cors',
             body: JSON.stringify(params),
@@ -85,7 +85,7 @@ class Listamusicas extends React.Component {
             duration : duracao.value
         }
 
-        const request = await fetch('http://localhost:4567/song/update/'+id, {
+        const request = await fetch('http://localhost:4567/home/update/'+id, {
             method: 'POST',
             mode: 'no-cors',
             body: JSON.stringify(params),
@@ -111,7 +111,7 @@ class Listamusicas extends React.Component {
             id: id.toString(),
         };
 
-        const request = await fetch('http://localhost:4567/song/delete/'+id, {
+        const request = await fetch('http://localhost:4567/home/delete/'+id, {
             method: 'GET',
             mode: 'no-cors',
             headers: {
